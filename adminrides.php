@@ -174,6 +174,8 @@ if (isset($_GET['status'])) {
                                 <?php endif; ?>
                                 <a href="<?php echo $fileaction[0]; ?>&action=delete&rideid=<?php echo $row['ride_id']; ?>"
                                     id="delete">Delete</a>
+                                <a href="invoice.php?action=view&rideid=<?php echo $row['ride_id']; ?>&userid=<?php echo $userInfo['user_id'] ?>"
+                                    id="view">Invoice</a>
                             </td>
                         </tr>
                         <?php  } ?>

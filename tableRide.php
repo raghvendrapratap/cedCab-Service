@@ -202,4 +202,15 @@ class tableRide
         $result = $conn->query($sql);
         return $row = $result->num_rows;
     }
+
+    function rideInfo($rideid, $conn)
+    {
+        $sql = "SELECT * from `tbl_ride` WHERE ride_id= $rideid";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row;
+        }
+    }
 }
