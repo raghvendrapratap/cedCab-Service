@@ -114,7 +114,7 @@ if (isset($_GET['status'])) {
                 <label for="filterbydate">Filter By Date</label>
                 <select class="" id="filterbydate">
                     <option value="" selected>All Ride</option>
-                    <option value="today">Today</option>
+                    <option value="today">Last 24 hrs</option>
                     <option value="last7days">Last 7 days</option>
                     <option value="last30days">Last 30 days</option>
                 </select>
@@ -201,18 +201,22 @@ if (isset($_GET['status'])) {
                 if (value.status == 0) {
                     $status = "Cancelled";
                     $button = "<a href='" + fileaction + "&action=delete&rideid=" + value.ride_id +
-                        "' id='delete'>Delete</a>";
+                        "' id='delete'>Delete</a><a href='invoice.php?action=view&rideid=" + value.ride_id +
+                        "&userid=" + value[0].user_id + "' id='view'>Invoice</a>";
                 } else if (value.status == 1) {
                     $button = "<a href='" + fileaction + "&action=aproove&rideid=" + value.ride_id +
                         "' id='aproove'>Approve</a><a href='" + fileaction + "&action=cancel&rideid=" + value
                         .ride_id + "' id='cancel'>Cancel</a><a href='" + fileaction + "&action=delete&rideid=" +
-                        value.ride_id + "' id='delete'>Delete</a>";
+                        value.ride_id + "' id='delete'>Delete</a><a href='invoice.php?action=view&rideid=" +
+                        value.ride_id +
+                        "&userid=" + value[0].user_id + "' id='view'>Invoice</a>";
                     $status = "Pending";
                 } else if (value.status == 2) {
                     $status = "Completed";
                     $fare += parseInt(value['total_fare']);
                     $button = "<a href='" + fileaction + "&action=delete&rideid=" + value.ride_id +
-                        "' id='delete'>Delete</a>";
+                        "' id='delete'>Delete</a><a href='invoice.php?action=view&rideid=" + value.ride_id +
+                        "&userid=" + value[0].user_id + "' id='view'>Invoice</a>";
                 }
                 table += "<tr><td> " + value[0].name + "</td><td> " + value.ride_date + "</td><td>" + value
                     .from_distance + "</td><td>" + value.to_distance + "</td><td>" + value.luggage +

@@ -83,7 +83,7 @@ if (isset($_GET['status'])) {
                 <label for="filterbydate">Filter By Date</label>
                 <select class="" id="filterbydate">
                     <option value="" selected>All Ride</option>
-                    <option value="today">Today</option>
+                    <option value="today">Last 24 hrs</option>
                     <option value="last7days">Last 7 days</option>
                     <option value="last30days">Last 30 days</option>
                 </select>
@@ -100,6 +100,7 @@ if (isset($_GET['status'])) {
                             <th>Cab Type</th>
                             <th>Fare</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="tbody">
@@ -124,11 +125,15 @@ if (isset($_GET['status'])) {
                                             echo "Completed";
                                         } ?>
                             </td>
+                            <td id="action">
+                                <a href="invoice.php?action=view&rideid=<?php echo $row['ride_id']; ?>&userid=<?php echo $customerid; ?>"
+                                    id="view">Invoice</a>
+                            </td>
                         </tr>
                         <?php  } ?>
                         <tr>
                             <td colspan="6">Total spent on CedCab :</td>
-                            <td colspan="2">Rs. <?php echo $totalfare; ?></td>
+                            <td colspan="3">Rs. <?php echo $totalfare; ?></td>
                         </tr>
                         <?php } ?>
                     <tbody>
@@ -138,6 +143,7 @@ if (isset($_GET['status'])) {
         </div>
         <script>
         function showTable(msg) {
+            var customerid = '<?php echo $customerid; ?>';
             console.log(msg);
             var table = "";
             $fare = 0;
@@ -154,9 +160,10 @@ if (isset($_GET['status'])) {
                 table += "<tr><td> " + value.ride_date + "</td><td>" + value.from_distance + "</td><td>" + value
                     .to_distance + "</td><td>" + value.luggage + " Kg</td><td>" + value.total_distance +
                     " km</td><td>" + value.cabType + "</td><td>Rs. " + value.total_fare + "</td><td>" +
-                    $status + "</td></tr>";
+                    $status + "</td><td id='action'><a href='invoice.php?action=view&rideid=" + value.ride_id +
+                    "&userid=" + customerid + "' id='view'>Invoice</a></td></tr>";
             });
-            table += "<tr><td colspan='6'>Total spent on CedCab :</td><td colspan='2'>Rs. " + $fare + "</td></tr>"
+            table += "<tr><td colspan='6'>Total spent on CedCab :</td><td colspan='3'>Rs. " + $fare + "</td></tr>"
             $("#tbody").html(table);
         }
         $(function() {

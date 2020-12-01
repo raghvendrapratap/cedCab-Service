@@ -32,6 +32,7 @@
 
 #signupform input[type=text],
 #signupform input[type=password],
+#signupform input[type=number],
 #loginform input[type=text],
 #loginform input[type=password],
 #loginform input[type=number] {
@@ -398,29 +399,34 @@ a {
 #invoice {
     text-align: center;
     padding: 5%;
+    width: 80%;
 }
 
 .left {
-    font-size: larger;
+    font-size: large;
     font-weight: bold;
     float: left;
-    width: 50%;
+    width: 48%;
     text-align: right;
     padding: 0px 5px;
-    margin: 4px 1px;
+    margin: 1px 4px;
 }
 
 .right {
     font-size: large;
-    width: 45%;
-    text-align: left;
     font-weight: bold;
+    width: 40%;
+    text-align: left;
     float: left;
     padding: 0px 5px;
-    margin: 4px 8px;
+    margin: 1px 4px;
 }
 
 #print {
     padding: 3px 8px;
     font-size: large;
+}
+
+#head {
+    text-align: center;
 }

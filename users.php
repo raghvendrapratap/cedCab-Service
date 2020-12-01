@@ -76,6 +76,7 @@ class user
 
         $sql = "UPDATE tbl_user SET `name`='$name', `mobile`='$mobile'  WHERE `user_name`='$username'";
         if ($conn->query($sql) === true) {
+            $_SESSION['userInfo']['name'] = $name;
             return "Successfully Updated";
         } else {
             return "Updation Failed";
@@ -141,8 +142,6 @@ class user
         $sql = "UPDATE tbl_user SET `isblock`=$isblock WHERE `user_id`=$userid";
         if ($conn->query($sql) === true) {
             return "Updated";
-        } else {
-            return "Updation Failed";
         }
     }
     function deleteUser($userid, $conn)
@@ -151,8 +150,6 @@ class user
         $sql = "DELETE from  tbl_user WHERE `user_id`=$userid";
         if ($conn->query($sql) === true) {
             return "Updated";
-        } else {
-            return "Updation Failed";
         }
     }
 
@@ -169,5 +166,43 @@ class user
         $sql = "SELECT * from tbl_user WHERE `is_admin`=0";
         $result = $conn->query($sql);
         return $result->num_rows;
+    }
+
+    function allUserFilterSort($sortby, $isblock, $conn)
+    {
+
+        $sql = "SELECT * from tbl_user WHERE `isblock`=$isblock AND `is_admin`=0 ORDER BY $sortby";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            return $result;
+        }
+    }
+    function allUserSort($sortby, $conn)
+    {
+
+        $sql = "SELECT * from tbl_user WHERE `is_admin`=0 ORDER BY $sortby";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            return $result;
+        }
+    }
+
+    function allUserFilterDate($interval, $isblock, $conn)
+    {
+
+        $sql = "SELECT * from tbl_user WHERE dateofsignup > DATE_SUB(NOW(), INTERVAL $interval DAY) AND `is_admin`=0 AND `isblock`=$isblock";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            return $result;
+        }
+    }
+    function UserFilterDate($interval, $conn)
+    {
+
+        $sql = "SELECT * from tbl_user WHERE dateofsignup > DATE_SUB(NOW(), INTERVAL $interval DAY) AND `is_admin`=0 ";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            return $result;
+        }
     }
 }

@@ -37,16 +37,97 @@ if (isset($_GET['action'])) {
 }
 
 if (isset($_GET['status'])) {
-
     $status = $_GET['status'];
+
     if ($_GET['status'] == "blocked") {
         $isblock = 0;
-        $result = $user->allUserFilter($isblock, $dbconn->conn);
+        if (isset($_GET['action'])) {
+            if (isset($_GET['sortby'])) {
+                $sortby = $_GET['sortby'];
+                if ($sortby == "name") {
+                    $result = $user->allUserFilterSort($sortby, $isblock, $dbconn->conn);
+                } else {
+                    $result = $user->allUserFilter($isblock, $dbconn->conn);
+                }
+            } elseif (isset($_GET['filterbydate'])) {
+                $filterby = $_GET['filterbydate'];
+                if ($filterby == "today") {
+                    $interval = 1;
+                    $result = $user->allUserFilterDate($interval, $isblock, $dbconn->conn);
+                } elseif ($filterby == "last7days") {
+                    $interval = 7;
+                    $result = $user->allUserFilterDate($interval, $isblock, $dbconn->conn);
+                } elseif ($filterby == "last30days") {
+                    $interval = 30;
+                    $result = $user->allUserFilterDate($interval, $isblock, $dbconn->conn);
+                } else {
+                    $result = $user->allUserFilter($isblock, $dbconn->conn);
+                }
+            } else {
+                $result = $user->allUserFilter($isblock, $dbconn->conn);
+            }
+        } else {
+            $result = $user->allUserFilter($isblock, $dbconn->conn);
+        }
     } elseif ($_GET['status'] == "unblocked") {
         $isblock = 1;
-        $result = $user->allUserFilter($isblock, $dbconn->conn);
+        if (isset($_GET['action'])) {
+            if (isset($_GET['sortby'])) {
+                $sortby = $_GET['sortby'];
+                if ($sortby == "name") {
+                    $result = $user->allUserFilterSort($sortby, $isblock, $dbconn->conn);
+                } else {
+                    $result = $user->allUserFilter($isblock, $dbconn->conn);
+                }
+            } elseif (isset($_GET['filterbydate'])) {
+                $filterby = $_GET['filterbydate'];
+                if ($filterby == "today") {
+                    $interval = 1;
+                    $result = $user->allUserFilterDate($interval, $isblock, $dbconn->conn);
+                } elseif ($filterby == "last7days") {
+                    $interval = 7;
+                    $result = $user->allUserFilterDate($interval, $isblock, $dbconn->conn);
+                } elseif ($filterby == "last30days") {
+                    $interval = 30;
+                    $result = $user->allUserFilterDate($interval, $isblock, $dbconn->conn);
+                } else {
+                    $result = $user->allUserFilter($isblock, $dbconn->conn);
+                }
+            } else {
+                $result = $user->allUserFilter($isblock, $dbconn->conn);
+            }
+        } else {
+            $result = $user->allUserFilter($isblock, $dbconn->conn);
+        }
     } else {
-        $result = $user->allUser($dbconn->conn);
+
+        if (isset($_GET['action'])) {
+            if (isset($_GET['sortby'])) {
+                $sortby = $_GET['sortby'];
+                if ($sortby == "name") {
+                    $result = $user->allUserSort($sortby, $dbconn->conn);
+                } else {
+                }
+            } elseif (isset($_GET['filterbydate'])) {
+                $filterby = $_GET['filterbydate'];
+                if ($filterby == "today") {
+                    $interval = 1;
+                    $result = $user->UserFilterDate($interval, $dbconn->conn);
+                } elseif ($filterby == "last7days") {
+                    $interval = 7;
+                    $result = $user->UserFilterDate($interval, $dbconn->conn);
+                } elseif ($filterby == "last30days") {
+                    $interval = 30;
+                    $result = $user->UserFilterDate($interval, $dbconn->conn);
+                } else {
+                    $result = $user->allUser($dbconn->conn);
+                }
+            } else {
+                $result = $user->allUser($dbconn->conn);
+            }
+        } else {
+            $result = $user->allUser($dbconn->conn);
+        }
     }
 } else {
     header('Location: adminusers.php?status=all');
@@ -94,6 +175,24 @@ if (isset($_GET['status'])) {
                 <a class="" href="adminaccount.php" id="accName">Welcome : <?php echo $name; ?> </a>
             </div>
 
+            <div id="sort">
+                <label for="sortby">Sort By</label>
+                <select class="" id="sortby">
+                    <option value="all" selected>All User</option>
+                    <option value="name">Name</option>
+                </select>
+            </div>
+
+            <div id="filter">
+                <label for="filterbydate">Filter By Date</label>
+                <select class="" id="filterbydate">
+                    <option value="" selected>All Ride</option>
+                    <option value="today">Last 24 hrs</option>
+                    <option value="last7days">Last 7 days</option>
+                    <option value="last30days">Last 30 days</option>
+                </select>
+            </div>
+
             <div id="ridetable">
                 <table id="ride">
                     <thead>
@@ -108,7 +207,7 @@ if (isset($_GET['status'])) {
                     </thead>
                     <tbody id="tbody">
                         <?php
-                        if ($result != '') {
+                        if (isset($result)) {
                             $totaluser = 0;
                             while ($row = $result->fetch_assoc()) {
                                 $totaluser += 1;
@@ -136,68 +235,32 @@ if (isset($_GET['status'])) {
                         <tr>
                             <td colspan="6">No. of users : <?php echo $totaluser; ?></td>
                         </tr>
-                        <?php } ?>
+                        <?php } else {
+                        ?>
+                        <tr>
+                            <td colspan="6">No Data</td>
+                        </tr>
+                        <?php
+                        } ?>
                     <tbody>
                 </table>
             </div>
 
         </div>
         <script>
-        function showTable(msg) {
-            var fileaction = '<?php echo $fileaction[0]; ?>';
-            console.log(status);
-            console.log(msg);
-            var table = "";
-            $fare = 0;
-            $.each(msg, function(i, value) {
-                $button = '';
-                if (value.status == 0) {
-                    $status = "Cancelled";
-                    $button = "<a href='" + fileaction + "&action=delete&rideid=" + value.ride_id +
-                        "' id='delete'>Delete</a>";
-                } else if (value.status == 1) {
-                    $button = "<a href='" + fileaction + "&action=aproove&rideid=" + value.ride_id +
-                        "' id='aproove'>Approve</a><a href='" + fileaction + "&action=cancel&rideid=" + value
-                        .ride_id + "' id='cancel'>Cancel</a><a href='" + fileaction + "&action=delete&rideid=" +
-                        value.ride_id + "' id='delete'>Delete</a>";
-                    $status = "Pending";
-                } else if (value.status == 2) {
-                    $status = "Completed";
-                    $fare += parseInt(value['total_fare']);
-                    $button = "<a href='" + fileaction + "&action=delete&rideid=" + value.ride_id +
-                        "' id='delete'>Delete</a>";
-                }
-                table += "<tr><td> " + value[0].name + "</td><td> " + value.ride_date + "</td><td>" + value
-                    .from_distance + "</td><td>" + value.to_distance + "</td><td>" + value.luggage +
-                    " Kg</td><td>" + value.total_distance + " km</td><td>" + value.cabType + "</td><td>Rs. " +
-                    value.total_fare + "</td><td>" + $status + "</td><td id='action'>" + $button + "</td></tr>";
-            });
-            table += "<tr><td colspan='7'>Total spent on CedCab :</td><td colspan='3'>Rs. " + $fare + "</td></tr>"
-            $("#tbody").html(table);
-        }
-
         $(function() {
-            var status = '<?php echo $status; ?>';
+
+            var file = '<?php echo $fileaction[0]; ?>';
             $("#sortby").change(function() {
                 var sortby = $("#sortby").val();
+                var url = file + "&action=sort&sortby=" + sortby;
+                window.location = url;
+            });
 
-                $.ajax({
-                    url: 'ajax.php',
-                    type: 'POST',
-                    data: {
-                        sortby: sortby,
-                        status: status,
-                        action: 'sortAdminRide',
-                    },
-                    dataType: "json",
-                    success: function(result) {
-                        console.log(result);
-                        showTable(result);
-                    },
-                    error: function() {
-                        console.log("Error");
-                    }
-                })
+            $("#filterbydate").change(function() {
+                var filterbydate = $("#filterbydate").val();
+                var url = file + "&action=sort&filterbydate=" + filterbydate;
+                window.location = url;
             });
         })
         </script>
