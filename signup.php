@@ -56,9 +56,7 @@ if (isset($_POST['signup'])) {
                         <li class="nav-item active">
                             <a class="btn btn-success ml-2 text-light" href="login.php">Login </a>
                         </li>
-                        <li class="nav-item active">
-                            <a class="btn btn-info ml-2 text-light" href="signup.php">Sign Up</a>
-                        </li>
+
 
                     </ul>
                 </div>

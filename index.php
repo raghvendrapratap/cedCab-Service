@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 $errors = "";
 include_once("dbconn.php");
@@ -6,6 +7,7 @@ include_once("table_location.php");
 include_once("tableRide.php");
 $tablelocation = new tablelocation();
 $dbconn = new dbconn();
+unset($_SESSION['cabInfo']);
 
 if (isset($_POST['book'])) {
     $pickup = isset($_POST['pickup']) ? $_POST['pickup'] : '';

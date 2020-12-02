@@ -198,6 +198,11 @@
     color: black;
 }
 
+.topnav #accName:hover {
+    background-color: #ff7504;
+    color: black;
+}
+
 #admin .topnav a:hover {
     background-color: #e96565;
     color: black;
@@ -339,14 +344,26 @@
 }
 
 #tiles .row {
+    height: auto;
     width: 100%;
 }
 
 #tiles .col {
+    box-shadow: 5px 5px 5px 5px rgb(233, 231, 231);
+    border-radius: 15px;
     float: left;
     width: 30%;
     margin: 25px 15px 0px 15px;
     height: 150px;
+    text-align: center;
+    color: rgb(56, 53, 48);
+}
+
+#tiles .coldiv {
+    float: left;
+    width: 30%;
+    margin: 0px 15px 0px 15px;
+    height: 180px;
     text-align: center;
     color: rgb(56, 53, 48);
 }
@@ -361,6 +378,34 @@
 
 .third {
     background-color: rgb(12, 104, 190);
+}
+
+.first:hover {
+    background-color: rgb(139, 127, 12);
+}
+
+.second:hover {
+    background-color: rgb(32, 97, 15);
+}
+
+.third:hover {
+    background-color: rgb(15, 77, 136);
+}
+
+.firstc {
+    background-color: rgb(122, 121, 199);
+}
+
+.secondc {
+    background-color: rgb(81, 142, 167);
+}
+
+.thirdc {
+    background-color: rgb(61, 184, 23);
+}
+
+.thirdc:hover {
+    background-color: rgb(39, 116, 16);
 }
 
 .text {
@@ -429,4 +474,123 @@ a {
 
 #head {
     text-align: center;
+}
+
+#tiles .col1 {
+    width: 46%;
+    height: 180px;
+    background-color: rgb(197, 147, 89);
+    box-shadow: 5px 5px 5px 5px rgb(233, 231, 231);
+    border-radius: 15px;
+}
+
+#tiles .col2 {
+    width: 46%;
+    height: 180px;
+    background-color: rgb(202, 171, 34);
+    box-shadow: 5px 5px 5px 5px rgb(233, 231, 231);
+    border-radius: 15px;
+}
+
+#tiles .col2:hover {
+    background-color: rgb(134, 113, 19);
+}
+
+.text1 {
+    font-size: 25px;
+    padding: 10px 0 4px;
+    margin: 0;
+    color: white;
+}
+
+.text2 {
+    font-size: 20px;
+    padding: 5px;
+    margin: 0;
+    color: white;
+}
+
+#tiles .colAdmin {
+    width: 96%;
+    height: 180px;
+    background-color: rgb(75, 162, 184);
+    box-shadow: 5px 5px 5px 5px rgb(233, 231, 231);
+    border-radius: 15px;
+}
+
+#approvebtn {
+    font-size: large;
+    margin-top: 30px;
+    padding: 10px 50px;
+    background-color: rgb(53, 163, 39);
+    box-shadow: 2px 2px rgb(233, 231, 231);
+    border-radius: 15px;
+    color: rgb(0, 0, 0);
+}
+
+#approvebtn:hover {
+    background-color: rgb(16, 90, 7);
+    color: rgb(255, 255, 255);
+}
+
+#cancelbtn {
+    font-size: large;
+    margin-top: 30px;
+    padding: 10px 50px;
+    background-color: rgb(175, 127, 72);
+    box-shadow: 2px 2px rgb(233, 231, 231);
+    border-radius: 15px;
+    color: rgb(7, 7, 7);
+}
+
+#cancelbtn:hover {
+    background-color: rgb(87, 65, 4);
+    color: rgb(255, 255, 255);
+}
+
+#deletebtn {
+    font-size: large;
+    color: rgb(3, 3, 3);
+    padding: 10px 50px;
+    background-color: rgb(197, 60, 60);
+    box-shadow: 2px 2px rgb(233, 231, 231);
+    border-radius: 15px;
+}
+
+#deletebtn:hover {
+    background-color: rgb(88, 2, 2);
+    color: rgb(255, 255, 255);
+}
+
+.pbtn {
+    margin: 30px;
+}
+
+.textRide {
+    width: 50%;
+    border-radius: 50% 50%;
+    background-color: rgb(53, 166, 185);
+    font-weight: bold;
+    font-size: 20px;
+    margin: 30px 30px;
+    padding: 10px 0;
+    color: rgb(255, 255, 255);
+    animation-name: example;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes example {
+    0% {
+        background-color: rgb(90, 22, 13);
+        color: rgb(255, 255, 255);
+    }
+    50% {
+        background-color: rgb(199, 58, 112);
+        color: rgb(0, 0, 0);
+    }
+    100% {
+        background-color: rgb(167, 3, 3);
+        color: rgb(58, 47, 47);
+    }
 }

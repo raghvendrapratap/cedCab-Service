@@ -95,7 +95,6 @@ if (isset($_GET['action'])) {
                             if (isset($rideInfo) && isset($userInfo)) {
                             ?>
                             <div class="left">
-                                <p class="">Customer ID : </p>
                                 <p class=""> Customer Name :</p>
                                 <p class=""> Ride ID :</p>
                                 <p class=""> Ride Date :</p>
@@ -108,7 +107,6 @@ if (isset($_GET['action'])) {
                                 <p class=""> Status :</p>
                             </div>
                             <div class="right">
-                                <p class=""> <?php echo $userInfo['user_id']; ?></p>
                                 <p class=""> <?php echo $userInfo['name']; ?></p>
                                 <p class=""> <?php echo $rideInfo['ride_id']; ?></p>
                                 <p class=""> <?php echo $rideInfo['ride_date']; ?></p>

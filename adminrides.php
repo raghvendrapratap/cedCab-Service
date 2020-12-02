@@ -223,7 +223,7 @@ if (isset($_GET['status'])) {
                     " Kg</td><td>" + value.total_distance + " km</td><td>" + value.cabType + "</td><td>Rs. " +
                     value.total_fare + "</td><td>" + $status + "</td><td id='action'>" + $button + "</td></tr>";
             });
-            table += "<tr><td colspan='7'>Total spent on CedCab :</td><td colspan='3'>Rs. " + $fare + "</td></tr>"
+            table += "<tr><td colspan='7'>Your total earning :</td><td colspan='3'>Rs. " + $fare + "</td></tr>"
             $("#tbody").html(table);
         }
 

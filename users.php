@@ -12,7 +12,7 @@ class user
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $_SESSION['userInfo'] = array('username' => $row['user_name'], 'customerid' => $row['user_id'], 'name' => $row['name'], 'is_admin' => $row['is_admin'], 'mob' => $row['mobile']);
-
+            setCookie("username", $username, time() + 86400);
             if ($row['is_admin'] == 1) {
                 if (isset($_SESSION['cabInfo'])) {
                     echo "<script type='text/javascript'>alert('You are Admin. You cant book Cab.'); window.location='admindashboard.php';</script>";
@@ -63,6 +63,7 @@ class user
             $password = md5($password);
             $sql = "INSERT INTO tbl_user (user_name, name,dateofsignup, mobile,isblock, password,is_admin) VALUES('$username','$name', '$dateofsignup' ,'$mob',$isblock,'$password',$is_admin)";
             if ($conn->query($sql) === true) {
+                setCookie("username", $username, time() + 86400);
                 header('Location:index.php');
             } else {
                 $errors[] = array('input' => 'form', 'msg' => $conn->error);

@@ -6,6 +6,8 @@ $(function() {
     $("#luggageMsg").hide();
 
     $("#type").change(function() {
+        $("#book").hide();
+        $("#submit").show();
         var cabType = $("#type").val();
         if (cabType == "CedMicro") {
             $("#luggageMsg").show();
@@ -27,8 +29,14 @@ $(function() {
             $(".error").css("display", "none");
         }
     });
+    $("#luggage").keyup(function() {
+        $("#book").hide();
+        $("#submit").show();
+    });
 
     $(".options").change(function() {
+        $("#book").hide();
+        $("#submit").show();
         $("select option").prop("disabled", false);
         $(".options").not($(this)).find("option[value='" + $(this).val() + "']").prop("disabled", true);
     });
@@ -78,11 +86,12 @@ $(function() {
                     $("#fare").val(result['fare']);
                     $("#distance").val(result['distance']);
                     $("#result").html("  Your Fare : Rs. " + result['fare']);
+                    $("#submit").hide();
                     $("#bookNow").html('<input type="submit" class="btn-success btn-lg btn-block" id="book" name="book" value="Book Now">');
                 },
                 error: function() {
                     $("#book").hide();
-                    $("#result").html("Some Error");
+                    $("#result").html("Pickup/Drop cant be same.");
                 }
             })
         }

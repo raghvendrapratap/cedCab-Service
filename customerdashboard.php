@@ -23,7 +23,43 @@ $status = 2;
 $completeRide = $tableRide->countFilterUserAllRide($customerid, $status, $dbconn->conn);
 $status = 0;
 $cancelRide = $tableRide->countFilterUserAllRide($customerid, $status, $dbconn->conn);
+$result = $tableRide->allRide($customerid, $dbconn->conn);
+$totalfare = 0;
+if (isset($result)) {
+    while ($row = $result->fetch_assoc()) {
+        if ($row['status'] == 2) {
+            $totalfare += $row['total_fare'];
+        }
+    }
+}
+$thismonth = $tableRide->allRideThisMonth($customerid, $dbconn->conn);
+$thismonthfare = 0;
+if (isset($thismonth)) {
+    while ($row = $thismonth->fetch_assoc()) {
+        if ($row['status'] == 2) {
+            $thismonthfare += $row['total_fare'];
+        }
+    }
+}
 
+$lastRide = $tableRide->userlastRide($customerid, $dbconn->conn);
+$lastRidestatus = '';
+$lastRidepickup = '';
+$lastRidedrop = '';
+$lastRideDate = '';
+if (isset($lastRide)) {
+    $row = $lastRide->fetch_assoc();
+    $lastRidepickup = $row['from_distance'];
+    $lastRidedrop = $row['to_distance'];
+    $lastRideDate = $row['ride_date'];;
+    if ($row['status'] == 0) {
+        $lastRidestatus = "Cancelled";
+    } else if ($row['status'] == 1) {
+        $lastRidestatus = "Pending";
+    } else if ($row['status'] == 2) {
+        $lastRidestatus = "Campleted";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -62,26 +98,43 @@ $cancelRide = $tableRide->countFilterUserAllRide($customerid, $status, $dbconn->
             <div id="tiles">
 
                 <div class="row">
-                    <a href="yourride.php?status=pending">
-                        <div class="col first">
-                            <p class="num"><?php echo $pendingRide; ?></p>
-                            <p class="text">Pending Rides</p>
+                    <a href="">
+                        <div class="col firstc">
+                            <p class="num">Rs.<?php echo $thismonthfare; ?></p>
+                            <p class="text">Your total spent this month</p>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="col secondc">
+                            <p class="num">Rs. <?php echo $totalfare; ?></p>
+                            <p class="text">Your total spent till now</p>
                         </div>
                     </a>
                     <a href="yourride.php?status=completed">
-                        <div class="col second">
+                        <div class="col thirdc">
                             <p class="num"><?php echo $completeRide; ?></p>
                             <p class="text">Completed Rides</p>
                         </div>
                     </a>
-                    <a href="yourride.php?status=cancelled">
-                        <div class="col third">
-                            <p class="num"><?php echo $cancelRide; ?></p>
-                            <p class="text">Cancelled Rides</p>
+
+                </div>
+
+                <div class="row">
+                    <a href="">
+                        <div class="col col1 first">
+                            <p class="text1"><?php echo $lastRidepickup; ?> To <?php echo $lastRidedrop; ?></p>
+                            <p class="text2">Date : <?php echo $lastRideDate; ?></p>
+                            <p class="text2">Status : <?php echo $lastRidestatus; ?></p>
+                            <p class="text">Your Last Ride</p>
+                        </div>
+                    </a>
+                    <a href="yourride.php?status=pending">
+                        <div class="col col2 first">
+                            <p class="num"><?php echo $pendingRide; ?></p>
+                            <p class="text">Pending Rides</p>
                         </div>
                     </a>
                 </div>
-
 
             </div>
         </div>

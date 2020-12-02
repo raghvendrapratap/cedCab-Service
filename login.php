@@ -48,9 +48,6 @@ if (isset($_POST['login'])) {
                             <a class="btn btn-warning text-dark" href="index.php">Home </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="btn btn-success ml-2 text-light" href="login.php">Login </a>
-                        </li>
-                        <li class="nav-item active">
                             <a class="btn btn-info ml-2 text-light" href="signup.php">Sign Up</a>
                         </li>
 
@@ -68,7 +65,9 @@ if (isset($_POST['login'])) {
                 </div>
                 <div>
                     <div><label>Username</label></div>
-                    <input type="text" id="username" name="username" placeholder="Username" required>
+                    <input type="text" id="username" name="username" placeholder="Username" required value="<?php if (isset($_COOKIE['username'])) {
+                                                                                                                echo $_COOKIE['username'];
+                                                                                                            } ?>">
                 </div>
                 <div>
                     <div><label>Password</label></div>

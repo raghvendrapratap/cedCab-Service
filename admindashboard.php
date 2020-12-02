@@ -20,6 +20,23 @@ $tableRide = new tableRide();
 $user = new user();
 $tablelocation = new tablelocation();
 
+if (isset($_GET['action'])) {
+    if (isset($_GET['rideid'])) {
+        $action = $_GET['action'];
+        $rideid = $_GET['rideid'];
+
+        if ($action == "aproove") {
+            $statusid = 2;
+            $result = $tableRide->updateStatus($rideid, $statusid, $dbconn->conn);
+        } elseif ($action == "cancel") {
+            $statusid = 0;
+            $result = $tableRide->updateStatus($rideid, $statusid, $dbconn->conn);
+        } elseif ($action == "delete") {
+            $result = $tableRide->deleteRide($rideid, $dbconn->conn);
+        }
+    }
+}
+
 $customerid = isset($_SESSION['userInfo']['customerid']) ? $_SESSION['userInfo']['customerid'] : 0;
 $name = isset($_SESSION['userInfo']['name']) ? $_SESSION['userInfo']['name'] : '';
 
@@ -42,6 +59,8 @@ $isAvailable = 0;
 $disablelocation = $tablelocation->countallLocationsFilter($isAvailable, $dbconn->conn);
 
 $alllocation = $tablelocation->countallLocationsAdmin($dbconn->conn);
+
+$firstPendingRide = $tableRide->firstPendingRide($dbconn->conn);
 ?>
 
 <!DOCTYPE html>
@@ -80,6 +99,45 @@ $alllocation = $tablelocation->countallLocationsAdmin($dbconn->conn);
             </div>
 
             <div id="tiles">
+                <div class="row">
+                    <div class="col colAdmin first">
+                        <?php if ($firstPendingRide->num_rows > 0) {
+                            $row = $firstPendingRide->fetch_assoc();
+                            $customerid = $row['customer_user_id'];
+                            $userInfo = $user->getUserInfo($customerid, $dbconn->conn); ?>
+                        <div class="coldiv ">
+                            <p class="textRide"><?php echo $pendingRide; ?> <br> New <br>Ride </br> Requests</p>
+                        </div>
+                        <div class="coldiv ">
+                            <p class="text1"><?php echo $row['from_distance'];; ?> To <?php echo $row['to_distance']; ?>
+                            </p>
+                            <p class="text2">Date : <?php echo $row['ride_date']; ?></p>
+                            <p class="text2">Customer Name : <?php echo $userInfo['name'] ?></p>
+                            <p class="text">New Ride Request</p>
+                        </div>
+                        <div class="coldiv ">
+                            <p class="pbtn">
+                                <a id="approvebtn" class="abtn"
+                                    href="admindashboard.php?action=aproove&rideid=<?php echo $row['ride_id']; ?>">Approve</a>
+                            </p>
+                            <p class="pbtn"><a id="cancelbtn" class="abtn"
+                                    href="admindashboard.php?action=cancel&rideid=<?php echo $row['ride_id']; ?>">Cancel</a>
+                            </p>
+                            <p class="pbtn">
+                                <a id="deletebtn" class="abtn"
+                                    href="admindashboard.php?action=delete&rideid=<?php echo $row['ride_id']; ?>">Delete</a>
+                            </p>
+                        </div>
+                        <?php
+                        } else { ?>
+
+                        <p class="num">0</p>
+                        <p class="text">New Ride Request</p>
+
+                        <?php
+                        } ?>
+                    </div>
+                </div>
 
                 <div class="row">
                     <a href="adminrides.php?status=pending">

@@ -24,8 +24,6 @@ class tableRide
 
         if ($result->num_rows > 0) {
             return $result;
-        } else {
-            return $result = '';
         }
     }
 
@@ -212,5 +210,31 @@ class tableRide
             $row = $result->fetch_assoc();
             return $row;
         }
+    }
+    function allRideThisMonth($customerid, $conn)
+    {
+        $sql = "SELECT * FROM tbl_ride WHERE MONTH(ride_date) = MONTH(CURRENT_DATE()) AND YEAR(ride_date) = YEAR(CURRENT_DATE()) AND `customer_user_id`=$customerid";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            return $result;
+        }
+    }
+    function userlastRide($customerid, $conn)
+    {
+        $sql = "SELECT * FROM `tbl_ride` WHERE customer_user_id=$customerid and ride_date=( SELECT max(cast(ride_date as DateTime)) FROM `tbl_ride` WHERE customer_user_id=$customerid )";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            return $result;
+        }
+    }
+
+    function firstPendingRide($conn)
+    {
+        $sql = "SELECT * FROM `tbl_ride` WHERE `status`=1 and ride_date=( SELECT MIN(cast(ride_date as DateTime)) FROM `tbl_ride` WHERE `status`=1 )";
+        $result = $conn->query($sql);
+
+        return $result;
     }
 }
