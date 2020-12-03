@@ -19,7 +19,7 @@ $(function() {
         }
     });
 
-    $("#luggage").bind("keypress", function(e) {
+    $(".onlytext").bind("keypress", function(e) {
         var keyCode = e.which ? e.which : e.keyCode
 
         if (!(keyCode >= 48 && keyCode <= 57)) {

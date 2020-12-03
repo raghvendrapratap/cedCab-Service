@@ -194,76 +194,79 @@ if (isset($_GET['status'])) {
             </div>
 
             <div id="ridetable">
-                <table id="ride">
-                    <thead>
-                        <tr>
-                            <th>Userame</th>
-                            <th>Name</th>
-                            <th>Signup Date & Time</th>
-                            <th>Mob No.</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody">
-                        <?php
-                        if (isset($result)) {
-                            $totaluser = 0;
-                            while ($row = $result->fetch_assoc()) {
-                                $totaluser += 1;
-                        ?>
-                        <tr>
-                            <td><?php echo $row['user_name'] ?></td>
-                            <td><?php echo $row['name'] ?></td>
-                            <td><?php echo $row['dateofsignup'] ?></td>
-                            <td><?php echo $row['mobile'] ?></td>
-                            <td><?php if ($row['isblock'] == 0) {
-                                            echo "Blocked";
-                                        } elseif ($row['isblock'] == 1) {
-                                            echo "Unblocked";
-                                        } ?>
-                            </td>
-                            <td id="action"><?php if ($row['isblock'] == 0) : ?><a
-                                    href="<?php echo $fileaction[0]; ?>&action=unblock&userid=<?php echo $row['user_id']; ?>"
-                                    id="aproove">Unblock</a><?php endif; ?><?php if ($row['isblock'] == 1) : ?><a
-                                    href="<?php echo $fileaction[0]; ?>&action=block&userid=<?php echo $row['user_id']; ?>"
-                                    id="cancel">Block</a><?php endif; ?><a
-                                    href="<?php echo $fileaction[0]; ?>&action=delete&userid=<?php echo $row['user_id']; ?>"
-                                    id="delete">Delete</a></td>
-                        </tr>
-                        <?php  } ?>
-                        <tr>
-                            <td colspan="6">No. of users : <?php echo $totaluser; ?></td>
-                        </tr>
-                        <?php } else {
-                        ?>
-                        <tr>
-                            <td colspan="6">No Data</td>
-                        </tr>
-                        <?php
-                        } ?>
-                    <tbody>
-                </table>
+
             </div>
-
+            <table id="ride">
+                <thead>
+                    <tr>
+                        <th>Userame</th>
+                        <th>Name</th>
+                        <th>Signup Date & Time</th>
+                        <th>Mob No.</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    <?php
+                    if (isset($result)) {
+                        $totaluser = 0;
+                        while ($row = $result->fetch_assoc()) {
+                            $totaluser += 1;
+                    ?>
+                    <tr>
+                        <td><?php echo $row['user_name'] ?></td>
+                        <td><?php echo $row['name'] ?></td>
+                        <td><?php echo $row['dateofsignup'] ?></td>
+                        <td><?php echo $row['mobile'] ?></td>
+                        <td><?php if ($row['isblock'] == 0) {
+                                        echo "Blocked";
+                                    } elseif ($row['isblock'] == 1) {
+                                        echo "Unblocked";
+                                    } ?>
+                        </td>
+                        <td id="action"><a href="viewride.php?action=view&userid=<?php echo $row['user_id']; ?>"
+                                id="view">View All Rides</a><?php if ($row['isblock'] == 0) : ?><a
+                                href="<?php echo $fileaction[0]; ?>&action=unblock&userid=<?php echo $row['user_id']; ?>"
+                                id="aproove">Unblock</a><?php endif; ?><?php if ($row['isblock'] == 1) : ?><a
+                                href="<?php echo $fileaction[0]; ?>&action=block&userid=<?php echo $row['user_id']; ?>"
+                                id="cancel">Block</a><?php endif; ?><a
+                                href="<?php echo $fileaction[0]; ?>&action=delete&userid=<?php echo $row['user_id']; ?>"
+                                id="delete">Delete</a></td>
+                    </tr>
+                    <?php  } ?>
+                    <tr>
+                        <td colspan="6">No. of users : <?php echo $totaluser; ?></td>
+                    </tr>
+                    <?php } else {
+                    ?>
+                    <tr>
+                        <td colspan="6">No Data</td>
+                    </tr>
+                    <?php
+                    } ?>
+                <tbody>
+            </table>
         </div>
-        <script>
-        $(function() {
 
-            var file = '<?php echo $fileaction[0]; ?>';
-            $("#sortby").change(function() {
-                var sortby = $("#sortby").val();
-                var url = file + "&action=sort&sortby=" + sortby;
-                window.location = url;
-            });
+    </div>
+    <script>
+    $(function() {
 
-            $("#filterbydate").change(function() {
-                var filterbydate = $("#filterbydate").val();
-                var url = file + "&action=sort&filterbydate=" + filterbydate;
-                window.location = url;
-            });
-        })
-        </script>
+        var file = '<?php echo $fileaction[0]; ?>';
+        $("#sortby").change(function() {
+            var sortby = $("#sortby").val();
+            var url = file + "&action=sort&sortby=" + sortby;
+            window.location = url;
+        });
+
+        $("#filterbydate").change(function() {
+            var filterbydate = $("#filterbydate").val();
+            var url = file + "&action=sort&filterbydate=" + filterbydate;
+            window.location = url;
+        });
+    })
+    </script>
     </div>
 </body>
 

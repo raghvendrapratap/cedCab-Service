@@ -46,6 +46,7 @@ $status = 2;
 $completeRide = $tableRide->countFilterAllRide($status, $dbconn->conn);
 $status = 0;
 $cancelRide = $tableRide->countFilterAllRide($status, $dbconn->conn);
+$allRide = $tableRide->countAllRide($dbconn->conn);
 
 $isblock = 0;
 $pendingUser = $user->countallUserFilter($isblock, $dbconn->conn);
@@ -61,8 +62,24 @@ $disablelocation = $tablelocation->countallLocationsFilter($isAvailable, $dbconn
 $alllocation = $tablelocation->countallLocationsAdmin($dbconn->conn);
 
 $firstPendingRide = $tableRide->firstPendingRide($dbconn->conn);
-?>
 
+$thismonth = $tableRide->adminearningThisMonth($dbconn->conn);
+$thismonthfare = 0;
+if (isset($thismonth)) {
+    while ($row = $thismonth->fetch_assoc()) {
+        $thismonthfare += $row['total_fare'];
+    }
+}
+$alladminride = $tableRide->allAdminRide($dbconn->conn);
+$totalfare = 0;
+if (isset($alladminride)) {
+    while ($row = $alladminride->fetch_assoc()) {
+        if ($row['status'] == 2) {
+            $totalfare += $row['total_fare'];
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -138,7 +155,26 @@ $firstPendingRide = $tableRide->firstPendingRide($dbconn->conn);
                         } ?>
                     </div>
                 </div>
-
+                <div class="row">
+                    <a>
+                        <div class="col first">
+                            <p class="num">Rs. <?php echo $thismonthfare; ?></p>
+                            <p class="text">Total earning this month.</p>
+                        </div>
+                    </a>
+                    <a>
+                        <div class="col second">
+                            <p class="num">Rs. <?php echo $totalfare; ?></p>
+                            <p class="text">Total earning till now.</p>
+                        </div>
+                    </a>
+                    <a href="adminrides.php?status=all">
+                        <div class="col third">
+                            <p class="num"><?php echo $allRide; ?></p>
+                            <p class="text">All Rides</p>
+                        </div>
+                    </a>
+                </div>
                 <div class="row">
                     <a href="adminrides.php?status=pending">
                         <div class="col first">

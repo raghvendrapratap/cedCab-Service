@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (isset($_SESSION['userInfo'])) {
+    header('Location: index.php');
+}
 include_once("dbconn.php");
 include_once("users.php");
 $errors = array();
@@ -33,6 +36,7 @@ if (isset($_POST['signup'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>SignUp</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -79,16 +83,22 @@ if (isset($_POST['signup'])) {
                     <h2>Sign Up</h2>
                 </div>
                 <div>
-                    <div><label>Username</label></div>
-                    <input type="text" id="username" name="username" placeholder="Username" required>
+                    <div><label>Username</label></div><small id="invalid">*Username already exists.</small>
+                    <input type="text" id="username" name="username" placeholder="Username" pattern="[A-Za-z0-9_]{1,20}"
+                        title="Username should only contain letters numbers and undercsore And length should be 20."
+                        required>
+
                 </div>
                 <div>
                     <div><label>Name</label></div>
-                    <input type="text" id="name" name="name" placeholder="name" required>
+                    <input type="text" id="name" name="name" placeholder="name" required
+                        pattern="^[a-zA-Z_]+( [a-zA-Z_]+)*$"
+                        title="Name should contain letters and one space between words.">
                 </div>
                 <div>
                     <div><label>Mob No.</label></div>
-                    <input type="number" id="mob" name="mob" placeholder="Mob No.">
+                    <input type="text" id="mob" class="onlytext" name="mob" placeholder="Mob No." maxlength="10"
+                        minlength="10">
                 </div>
                 <div>
                     <div><label>Password</label></div>
@@ -108,6 +118,44 @@ if (isset($_POST['signup'])) {
         </div>
 
     </section>
+    <script>
+    $(function() {
+        $("#invalid").hide();
+        $(".onlytext").bind("keypress", function(e) {
+            var keyCode = e.which ? e.which : e.keyCode
+
+            if (!(keyCode >= 48 && keyCode <= 57)) {
+                $(".error").css("display", "inline");
+                return false;
+            } else {
+                $(".error").css("display", "none");
+            }
+        })
+
+        $("#username").keyup(function() {
+            $("#invalid").hide();
+            var username = $("#username").val();
+            $.ajax({
+                url: 'ajax.php',
+                type: 'POST',
+                data: {
+                    username: username,
+                    action: 'checkUser',
+                },
+                success: function(result) {
+                    console.log(result);
+                    if (result == "Valid") {
+                        $("#invalid").show();
+                    }
+                },
+                error: function() {
+                    console.log("result");
+                    $("#invalid").hide();
+                }
+            })
+        })
+    })
+    </script>
 </body>
 
 </html>

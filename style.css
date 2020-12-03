@@ -441,12 +441,6 @@ a {
     margin: 30px 0 0 0;
 }
 
-#invoice {
-    text-align: center;
-    padding: 5%;
-    width: 80%;
-}
-
 .left {
     font-size: large;
     font-weight: bold;
@@ -465,11 +459,6 @@ a {
     float: left;
     padding: 0px 5px;
     margin: 1px 4px;
-}
-
-#print {
-    padding: 3px 8px;
-    font-size: large;
 }
 
 #head {
@@ -569,28 +558,94 @@ a {
 .textRide {
     width: 50%;
     border-radius: 50% 50%;
-    background-color: rgb(53, 166, 185);
+    background-color: rgb(75, 162, 184);
     font-weight: bold;
     font-size: 20px;
     margin: 30px 30px;
     padding: 10px 0;
     color: rgb(255, 255, 255);
-    animation-name: example;
-    animation-duration: 4s;
+    animation-name: pendingRide;
+    animation-duration: 3s;
     animation-iteration-count: infinite;
 }
 
-@keyframes example {
+@keyframes pendingRide {
     0% {
-        background-color: rgb(90, 22, 13);
-        color: rgb(255, 255, 255);
+        background-color: rgb(75, 162, 184);
+        color: rgb(75, 162, 184);
     }
     50% {
-        background-color: rgb(199, 58, 112);
-        color: rgb(0, 0, 0);
+        background-color: rgb(136, 21, 21);
+        color: rgb(255, 255, 255);
     }
     100% {
-        background-color: rgb(167, 3, 3);
-        color: rgb(58, 47, 47);
+        background-color: rgb(75, 162, 184);
+        color: rgb(75, 162, 184);
     }
+}
+
+#invoice {
+    text-align: center;
+    /* padding: 5%;
+    width: 80%; */
+}
+
+#tinvoice {
+    margin: 2% 10% 2% 20%;
+    border: 2px black solid;
+    width: 60%;
+    padding: 0 0 10% 0;
+}
+
+#thead {
+    margin: 0%;
+    text-align: left;
+    /* padding: 20px; */
+}
+
+#thead .logopara {
+    margin: 20px 0 0 40px;
+    text-align: left;
+}
+
+#tinvce {
+    padding: 20px 0 40px 0;
+    font-size: 25px;
+}
+
+#tdate {
+    padding: 10px 30x;
+    text-align: right;
+    font-size: 15px;
+}
+
+.tdc1 {
+    font-weight: 600;
+    padding: 3px 10px;
+    text-align: right;
+}
+
+.tdc2 {
+    padding: 3px 5px;
+    text-align: left;
+}
+
+#print {
+    background-color: rgb(145, 177, 155);
+    color: rgb(0, 0, 0);
+    padding: 3px 15px;
+    font-size: large;
+}
+
+#signupform .green {
+    color: rgb(3, 126, 30);
+}
+
+#ridetable #cinfo {
+    border: 2px black solid;
+    padding: 5px;
+}
+
+#ridetable #cinfo td {
+    padding: 5px;
 }

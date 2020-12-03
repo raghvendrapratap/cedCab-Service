@@ -398,4 +398,15 @@ if (isset($_POST['action'])) {
     }
     echo json_encode($resultArray);
   }
+
+
+  if ($_POST['action'] == "checkUser") {
+
+    $username = isset($_POST['username']) ? $_POST['username'] : '';
+    $userInfo = $user->checkUsername($username, $dbconn->conn);
+
+    if (isset($userInfo)) {
+      echo "Valid";
+    }
+  }
 }

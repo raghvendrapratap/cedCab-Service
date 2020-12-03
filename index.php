@@ -207,7 +207,7 @@ if (isset($_POST['book'])) {
                     <div class="form-group row bg-grey border-radius my-1">
                         <label for="luggage" class="col-sm-2 col-form-label small-text my-auto">Luggage</label>
                         <div class="col-sm-10 bg-grey border-radius">
-                            <input type="text" class="form-control-plaintext pl-2 " id="luggage"
+                            <input type="text" class="form-control-plaintext pl-2 onlytext" id="luggage"
                                 placeholder="Enter Weight in KG">
                             <small id="luggageMsg" class="form-text text-danger">
                                 *Luggage option is not available with CedMicro.

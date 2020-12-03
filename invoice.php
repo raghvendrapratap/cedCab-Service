@@ -88,44 +88,68 @@ if (isset($_GET['action'])) {
                     <?php } ?>
                     <div id="invoice">
                         <div id="printdiv">
-                            <p class="logopara">Ced<span class="logospan border-radius">Cab</span></p>
-                            <h2 id="head">Your Invoice</h2>
 
                             <?php
                             if (isset($rideInfo) && isset($userInfo)) {
                             ?>
-                            <div class="left">
-                                <p class=""> Customer Name :</p>
-                                <p class=""> Ride ID :</p>
-                                <p class=""> Ride Date :</p>
-                                <p class=""> Pickup Point :</p>
-                                <p class=""> Destination Point :</p>
-                                <p class=""> Cab Type :</p>
-                                <p class=""> Total luggage :</p>
-                                <p class=""> Total Distance Travelled :</p>
-                                <p class=""> Total Fare :</p>
-                                <p class=""> Status :</p>
-                            </div>
-                            <div class="right">
-                                <p class=""> <?php echo $userInfo['name']; ?></p>
-                                <p class=""> <?php echo $rideInfo['ride_id']; ?></p>
-                                <p class=""> <?php echo $rideInfo['ride_date']; ?></p>
-                                <p class=""> <?php echo $rideInfo['from_distance']; ?></p>
-                                <p class=""> <?php echo $rideInfo['to_distance']; ?></p>
-                                <p class=""> <?php echo $rideInfo['cabType']; ?></p>
-                                <p class=""> <?php echo $rideInfo['luggage']; ?> Kg.</p>
-                                <p class=""><?php echo $rideInfo['total_distance']; ?> km.</p>
-                                <p class="">Rs.<?php echo $rideInfo['total_fare']; ?> </p>
-                                <p class=""><?php if ($rideInfo['status'] == 0) {
-                                                    echo "Cancelled";
-                                                } elseif ($rideInfo['status'] == 1) {
-                                                    echo "Pending";
-                                                } elseif ($rideInfo['status'] == 2) {
-                                                    echo "Completed";
-                                                }; ?> </p>
-                            </div>
+
+                            <table id="tinvoice">
+                                <tr>
+                                    <td id="thead">
+                                        <p class="logopara">Ced<span class="logospan border-radius">Cab</span></p>
+                                    </td>
+                                    <td id="tdate">Date: <?php echo $rideInfo['ride_date']; ?></td>
+                                </tr>
+                                <tr>
+                                    <th id="tinvce" colspan="2">Invoice</th>
+                                </tr>
+                                <tr></tr>
+
+                                <tr>
+                                    <td class="tdc1">Customer Name :</td>
+                                    <td class="tdc2"><?php echo $userInfo['name']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="tdc1">Ride ID :</td>
+                                    <td class="tdc2"><?php echo $rideInfo['ride_id']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="tdc1">Pickup Point :</td>
+                                    <td class="tdc2"><?php echo $rideInfo['from_distance']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="tdc1">Destination Point :</td>
+                                    <td class="tdc2"><?php echo $rideInfo['to_distance']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="tdc1">Cab Type :</td>
+                                    <td class="tdc2"><?php echo $rideInfo['cabType']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="tdc1">Total luggage :</td>
+                                    <td class="tdc2"><?php echo $rideInfo['luggage']; ?> Kg.</td>
+                                </tr>
+                                <tr>
+                                    <td class="tdc1">Total Distance Travelled :</td>
+                                    <td class="tdc2"><?php echo $rideInfo['total_distance']; ?> Km.</td>
+                                </tr>
+                                <tr>
+                                    <td class="tdc1"> Total Fare :</td>
+                                    <td class="tdc2"><strong>Rs. <?php echo $rideInfo['total_fare']; ?></strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="tdc1"> Status :</td>
+                                    <td class="tdc2"><strong><?php if ($rideInfo['status'] == 0) {
+                                                                        echo "Cancelled";
+                                                                    } elseif ($rideInfo['status'] == 1) {
+                                                                        echo "Pending";
+                                                                    } elseif ($rideInfo['status'] == 2) {
+                                                                        echo "Completed";
+                                                                    }; ?></strong></td>
+                                </tr>
+                            </table>
                         </div>
-                        <p class="left">
+                        <p class="">
                             <button id="print">Print</button>
                         </p>
                         <?php

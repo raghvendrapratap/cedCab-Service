@@ -7,12 +7,25 @@ if (!isset($_SESSION['userInfo'])) {
 }
 $filename = basename($_SERVER['REQUEST_URI']);
 $file = explode('?', $filename);
+$fileaction = explode('&', $filename);
 
 include_once("dbconn.php");
 include_once("tableRide.php");
 $dbconn = new dbconn();
 $tableRide = new tableRide();
 $customerid = isset($_SESSION['userInfo']['customerid']) ? $_SESSION['userInfo']['customerid'] : 0;
+
+if (isset($_GET['action'])) {
+    if (isset($_GET['rideid'])) {
+        $action = $_GET['action'];
+        $rideid = $_GET['rideid'];
+
+        if ($action == "cancel") {
+            $statusid = 0;
+            $result = $tableRide->updateStatus($rideid, $statusid, $dbconn->conn);
+        }
+    }
+}
 
 if (isset($_GET['status'])) {
 
@@ -23,10 +36,12 @@ if (isset($_GET['status'])) {
         $result = $tableRide->cancelledRide($customerid, $dbconn->conn);
     } elseif ($_GET['status'] == "completed") {
         $result = $tableRide->completedRide($customerid, $dbconn->conn);
+    } else {
+        $status = 'all';
+        $result = $tableRide->allRide($customerid, $dbconn->conn);
     }
 } else {
-    $status = 'all';
-    $result = $tableRide->allRide($customerid, $dbconn->conn);
+    header('Location: yourride.php?status=all');
 }
 ?>
 <!DOCTYPE html>
@@ -58,13 +73,13 @@ if (isset($_GET['status'])) {
 
         <div class="content ">
             <div class="topnav">
-                <a class="<?php if ($filename == "yourride.php") : ?> active<?php endif; ?>" href="yourride.php"
-                    id="all">All Ride</a>
-                <a class="<?php if ($filename == "yourride.php?status=pending") : ?> active<?php endif; ?>"
+                <a class="<?php if ($fileaction[0] == "yourride.php?status=all") : ?> active<?php endif; ?>"
+                    href="yourride.php" id="all">All Ride</a>
+                <a class="<?php if ($fileaction[0] == "yourride.php?status=pending") : ?> active<?php endif; ?>"
                     href="yourride.php?status=pending" id="pending">Pending Ride</a>
-                <a class="<?php if ($filename == "yourride.php?status=cancelled") : ?> active<?php endif; ?>"
+                <a class="<?php if ($fileaction[0] == "yourride.php?status=cancelled") : ?> active<?php endif; ?>"
                     href="yourride.php?status=cancelled" id="cancelled">Cancelled Ride</a>
-                <a class="<?php if ($filename == "yourride.php?status=completed") : ?> active<?php endif; ?>"
+                <a class="<?php if ($fileaction[0] == "yourride.php?status=completed") : ?> active<?php endif; ?>"
                     href="yourride.php?status=completed" id="completed">Completed Ride</a>
                 <a class="" href="yourprofile.php" id="accName">Welcome : <?php echo $_SESSION['userInfo']['name']; ?>
                 </a>
@@ -125,7 +140,10 @@ if (isset($_GET['status'])) {
                                             echo "Completed";
                                         } ?>
                             </td>
-                            <td id="action">
+                            <td id="action"><?php if ($row['status'] == 1) : ?>
+                                <a href="<?php echo $fileaction[0]; ?>&action=cancel&rideid=<?php echo $row['ride_id']; ?>"
+                                    id="cancel">Cancel</a>
+                                <?php endif; ?>
                                 <a href="invoice.php?action=view&rideid=<?php echo $row['ride_id']; ?>&userid=<?php echo $customerid; ?>"
                                     id="view">Invoice</a>
                             </td>
@@ -144,13 +162,17 @@ if (isset($_GET['status'])) {
         <script>
         function showTable(msg) {
             var customerid = '<?php echo $customerid; ?>';
+            var fileaction = '<?php echo $fileaction[0]; ?>';
             console.log(msg);
             var table = "";
             $fare = 0;
             $.each(msg, function(i, value) {
+                $button = '';
                 if (value.status == 0) {
                     $status = "Cancelled";
                 } else if (value.status == 1) {
+                    $button = "<a href='" + fileaction + "&action=cancel&rideid=" + value
+                        .ride_id + "' id='cancel'>Cancel</a>";
                     $status = "Pending";
                 } else if (value.status == 2) {
                     $status = "Completed";
@@ -160,7 +182,8 @@ if (isset($_GET['status'])) {
                 table += "<tr><td> " + value.ride_date + "</td><td>" + value.from_distance + "</td><td>" + value
                     .to_distance + "</td><td>" + value.luggage + " Kg</td><td>" + value.total_distance +
                     " km</td><td>" + value.cabType + "</td><td>Rs. " + value.total_fare + "</td><td>" +
-                    $status + "</td><td id='action'><a href='invoice.php?action=view&rideid=" + value.ride_id +
+                    $status + "</td><td id='action'>" + $button + "<a href='invoice.php?action=view&rideid=" +
+                    value.ride_id +
                     "&userid=" + customerid + "' id='view'>Invoice</a></td></tr>";
             });
             table += "<tr><td colspan='6'>Total spent on CedCab :</td><td colspan='3'>Rs. " + $fare + "</td></tr>"

@@ -206,4 +206,14 @@ class user
             return $result;
         }
     }
+
+    function checkUsername($username, $conn)
+    {
+
+        $sql = "SELECT * from `tbl_user` WHERE user_name='$username'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            return $result;
+        }
+    }
 }

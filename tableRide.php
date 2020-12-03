@@ -153,7 +153,8 @@ class tableRide
     {
         $sql = " SELECT * from `tbl_ride`";
         $result = $conn->query($sql);
-        return $row = $result->num_rows;
+        $row = $result->num_rows;
+        return $row;
     }
 
     function filterbydateRide($status, $interval, $conn)
@@ -236,5 +237,15 @@ class tableRide
         $result = $conn->query($sql);
 
         return $result;
+    }
+
+    function adminearningThisMonth($conn)
+    {
+        $sql = "SELECT * FROM tbl_ride WHERE MONTH(ride_date) = MONTH(CURRENT_DATE()) AND YEAR(ride_date) = YEAR(CURRENT_DATE()) AND `status`=2";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            return $result;
+        }
     }
 }

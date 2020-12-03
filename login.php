@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (isset($_SESSION['userInfo'])) {
+    header('Location: index.php');
+}
 $message = "";
 include_once("dbconn.php");
 include_once("users.php");

@@ -31,9 +31,9 @@ class tableLocation
 
         $sql = "INSERT INTO `tbl_location` (`name`, `distance`,`is_available`) VALUES('$locationName','$distance',1)";
         if ($conn->query($sql) === true) {
-            return "Added";
+            echo "<script type='text/javascript'>alert('" . $locationName . " location added Succssfully');</script>";
         } else {
-            return "Failed";
+            echo "<script type='text/javascript'>alert('Failed, Enter valid details');</script>";
         }
     }
 

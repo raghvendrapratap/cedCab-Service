@@ -190,6 +190,17 @@ if (isset($_GET['status'])) {
 
         </div>
         <script>
+        $(".onlytext").bind("keypress", function(e) {
+            var keyCode = e.which ? e.which : e.keyCode
+
+            if (!(keyCode >= 48 && keyCode <= 57)) {
+                $(".error").css("display", "inline");
+                return false;
+            } else {
+                $(".error").css("display", "none");
+            }
+        })
+
         function showTable(msg) {
             var fileaction = '<?php echo $fileaction[0]; ?>';
             console.log(status);

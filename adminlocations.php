@@ -36,7 +36,7 @@ if (isset($_POST['addnew'])) {
 
     $locationName = isset($_POST['locationName']) ? $_POST['locationName'] : '';
     $distance = isset($_POST['distance']) ? $_POST['distance'] : '';
-    $sql = $tablelocation->addLocations($locationName, $distance, $dbconn->conn);
+    $addmsg = $tablelocation->addLocations($locationName, $distance, $dbconn->conn);
 }
 
 $result = $tablelocation->allLocationsAdmin($dbconn->conn);
@@ -53,6 +53,7 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
     <link rel="stylesheet" href="style.css">
     <title>Ced Cab</title>
 </head>
+
 
 <body>
     <div id="admin">
@@ -76,7 +77,7 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
         <div class="content ">
             <div class="topnav">
                 <a class="active " id="aUpdate">All Locations</a>
-                <a class=" " id="aPass">Add New Location</a>
+                <a class="" id="aPass">Add New Location</a>
                 <a class="" href="adminaccount.php" id="accName">Welcome : <?php echo $name; ?> </a>
             </div>
 
@@ -131,14 +132,16 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
                         </div>
                         <div>
                             <div><label>Location Name</label></div>
-                            <input type="text" id="username" name="locationName">
+                            <input type="text" id="username" name="locationName" required
+                                pattern="^[a-zA-Z_]+( [a-zA-Z_]+)*$"
+                                title="Name should contain letters and one space between words.">
                         </div>
                         <div>
                             <div><label>Distance From Charbagh</label></div>
-                            <input type="number" id="name" name="distance">
+                            <input type="text" class="onlytext" id="name" name="distance">
                         </div>
                         <div>
-                            <input type="submit" id="addnewlocation" value="Add New Location" name="addnew">
+                            <input type="submit" id="addnewlocation" value="Add New Location" name="addnew" required>
                         </div>
                     </form>
                 </div>
@@ -164,6 +167,17 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
                 $("#notification").hide();
                 $("#addnew").show();
                 $("#ridetable").hide();
+            })
+
+            $(".onlytext").bind("keypress", function(e) {
+                var keyCode = e.which ? e.which : e.keyCode
+
+                if (!(keyCode >= 48 && keyCode <= 57)) {
+                    $(".error").css("display", "inline");
+                    return false;
+                } else {
+                    $(".error").css("display", "none");
+                }
             })
         })
         </script>
