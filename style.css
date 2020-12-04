@@ -130,7 +130,8 @@
 #admin div.content {
     margin-left: 200px;
     padding: 1px 16px;
-    height: 1000px;
+    height: 100%;
+    margin-bottom: 70px;
 }
 
 #heading {
@@ -654,4 +655,36 @@ th {
     background: white;
     position: sticky;
     top: 0;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 82%;
+    background-color: #EFEFEF;
+    text-align: center;
+    /* padding-bottom: 10px; */
+}
+
+.fleft {
+    float: left;
+    width: 32%;
+}
+
+#rightFooter {
+    padding: 20px 30px 0 0;
+    text-align: right;
+}
+
+#firstFooter .logopara {
+    text-align: left;
+    padding-left: 30px;
+}
+
+#midFooter {
+    padding-top: 10px;
+}
+
+#admin #admincontent {
+    height: 1000px;
 }
