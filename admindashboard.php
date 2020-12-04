@@ -166,18 +166,17 @@ if (isset($alladminride)) {
                     </div>
                 </div>
                 <div class="row">
-                    <a>
-                        <div class="col first">
-                            <p class="num">Rs. <?php echo $thismonthfare; ?></p>
-                            <p class="text">Total earning this month.</p>
-                        </div>
-                    </a>
-                    <a>
-                        <div class="col second">
-                            <p class="num">Rs. <?php echo $totalfare; ?></p>
-                            <p class="text">Total earning till now.</p>
-                        </div>
-                    </a>
+
+                    <div class="col first">
+                        <p class="num">Rs. <?php echo $thismonthfare; ?></p>
+                        <p class="text">Total earning this month.</p>
+                    </div>
+
+                    <div class="col second">
+                        <p class="num">Rs. <?php echo $totalfare; ?></p>
+                        <p class="text">Total earning till now.</p>
+                    </div>
+
                     <a href="adminrides.php?status=all">
                         <div class="col third">
                             <p class="num"><?php echo $allRide; ?></p>

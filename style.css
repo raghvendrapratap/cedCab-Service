@@ -382,15 +382,15 @@
     background-color: rgb(12, 104, 190);
 }
 
-.first:hover {
+a .first:hover {
     background-color: rgb(139, 127, 12);
 }
 
-.second:hover {
+a .second:hover {
     background-color: rgb(32, 97, 15);
 }
 
-.third:hover {
+a .third:hover {
     background-color: rgb(15, 77, 136);
 }
 

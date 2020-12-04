@@ -109,18 +109,18 @@ if (isset($lastRide)) {
             <div id="tiles">
 
                 <div class="row">
-                    <a href="">
-                        <div class="col firstc">
-                            <p class="num">Rs.<?php echo $thismonthfare; ?></p>
-                            <p class="text">Your total spent this month</p>
-                        </div>
-                    </a>
-                    <a href="">
-                        <div class="col secondc">
-                            <p class="num">Rs. <?php echo $totalfare; ?></p>
-                            <p class="text">Your total spent till now</p>
-                        </div>
-                    </a>
+
+                    <div class="col firstc">
+                        <p class="num">Rs.<?php echo $thismonthfare; ?></p>
+                        <p class="text">Your total spent this month</p>
+                    </div>
+
+
+                    <div class="col secondc">
+                        <p class="num">Rs. <?php echo $totalfare; ?></p>
+                        <p class="text">Your total spent till now</p>
+                    </div>
+
                     <a href="yourride.php?status=completed">
                         <div class="col thirdc">
                             <p class="num"><?php echo $completeRide; ?></p>
