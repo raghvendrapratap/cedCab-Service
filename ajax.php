@@ -3,6 +3,8 @@ session_start();
 include_once("dbconn.php");
 include_once("tableRide.php");
 include_once("users.php");
+include_once("table_location.php");
+$tablelocation = new tablelocation();
 $dbconn = new dbconn();
 $tableRide = new tableRide();
 $user = new user();
@@ -407,6 +409,16 @@ if (isset($_POST['action'])) {
 
     if (isset($userInfo)) {
       echo "Valid";
+    }
+  }
+
+  if ($_POST['action'] == "checklocation") {
+
+    $lname = isset($_POST['lname']) ? $_POST['lname'] : '';
+    $lInfo = $tablelocation->checklname($lname, $dbconn->conn);
+
+    if (isset($lInfo)) {
+      echo "inValid";
     }
   }
 }

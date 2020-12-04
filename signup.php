@@ -3,6 +3,8 @@ session_start();
 if (isset($_SESSION['userInfo'])) {
     header('Location: index.php');
 }
+$_SESSION['activeTime'] = time();
+
 include_once("dbconn.php");
 include_once("users.php");
 $errors = array();
@@ -34,6 +36,7 @@ if (isset($_POST['signup'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/4b2ee26aaa.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -156,6 +159,30 @@ if (isset($_POST['signup'])) {
         })
     })
     </script>
+    <!-- Footer area -->
+    <div class="row text-center container-fluid py-3 m-0 bg-light" id="footer">
+
+        <div class="col-md-4 col-lg-4 col-sm-12 pt-2">
+            <i class="fa fa-facebook-square icon-size mx-2 " aria-hidden="true"></i>
+            <i class="fa fa-twitter icon-size mx-2" aria-hidden="true"></i>
+            <i class="fa fa-instagram icon-size mx-2" aria-hidden="true"></i>
+        </div>
+
+        <div class="col-md-4 col-lg-4 col-sm-12  pt-2">
+            <p class="lead text-warning m-0">Ced<span class="bg-warning border-radius text-white px-1">Cab</span></p>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-12 pt-2">
+        </div>
+    </div>
+
+    <!-- Libraries -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </body>
 
 </html>

@@ -5,6 +5,17 @@ if (!isset($_SESSION['userInfo'])) {
 } elseif ($_SESSION['userInfo']['is_admin'] == 1) {
     header('Location: index.php');
 }
+if (isset($_SESSION['activeTime'])) {
+    if (time() - $_SESSION['activeTime'] > 300) {
+        session_destroy();
+        echo "<script type='text/javascript'>alert('Your Session has timed out. Please Login Again.'); window.location='index.php';</script>";
+    } else {
+        $_SESSION['activeTime'] = time();
+    }
+} else {
+    $_SESSION['activeTime'] = time();
+}
+
 $message = '';
 $filename = basename($_SERVER['REQUEST_URI']);
 $file = explode('?', $filename);

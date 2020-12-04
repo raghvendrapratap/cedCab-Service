@@ -5,6 +5,17 @@ if (!isset($_SESSION['userInfo'])) {
 } elseif ($_SESSION['userInfo']['is_admin'] == 0) {
     header('Location: index.php');
 }
+if (isset($_SESSION['activeTime'])) {
+    if (time() - $_SESSION['activeTime'] > 300) {
+        session_destroy();
+        echo "<script type='text/javascript'>alert('Your Session has timed out. Please Login Again.'); window.location='index.php';</script>";
+    } else {
+        $_SESSION['activeTime'] = time();
+    }
+} else {
+    $_SESSION['activeTime'] = time();
+}
+
 $message = '';
 $filename = basename($_SERVER['REQUEST_URI']);
 $file = explode('?', $filename);
@@ -131,9 +142,9 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
                             <h2>Add New location</h2>
                         </div>
                         <div>
-                            <div><label>Location Name</label></div>
-                            <input type="text" id="username" name="locationName" required
-                                pattern="^[a-zA-Z0-9_][a-zA-Z]+[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$"
+                            <div><label>Location Name</label></div><small id="invalid">*Location already exists.</small>
+                            <input type="text" id="lname" name="locationName" required
+                                pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$"
                                 title="Name should contain letters and letters and one space between words.">
                         </div>
                         <div>
@@ -150,10 +161,12 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
 
         <script>
         $(function() {
+            $("#invalid").hide();
             $("#notification").hide();
             $("#match").hide();
             $("#addnew").hide();
             $("#aUpdate").click(function() {
+                $("#invalid").hide();
                 $("#aUpdate").addClass("active");
                 $("#aPass").removeClass("active");
                 $("#notification").hide();
@@ -162,6 +175,7 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
             })
 
             $("#aPass").click(function() {
+                $("#invalid").hide();
                 $("#aPass").addClass("active");
                 $("#aUpdate").removeClass("active");
                 $("#notification").hide();
@@ -178,6 +192,29 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
                 } else {
                     $(".error").css("display", "none");
                 }
+            })
+
+            $("#lname").keyup(function() {
+                $("#invalid").hide();
+                var lname = $("#lname").val();
+                $.ajax({
+                    url: 'ajax.php',
+                    type: 'POST',
+                    data: {
+                        lname: lname,
+                        action: 'checklocation',
+                    },
+                    success: function(result) {
+                        console.log(result);
+                        if (result == "inValid") {
+                            $("#invalid").show();
+                        }
+                    },
+                    error: function() {
+                        console.log("result");
+                        $("#invalid").hide();
+                    }
+                })
             })
         })
         </script>

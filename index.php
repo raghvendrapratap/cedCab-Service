@@ -1,6 +1,16 @@
 <?php
 
 session_start();
+
+if (isset($_SESSION['activeTime'])) {
+    if (time() - $_SESSION['activeTime'] > 300) {
+        session_destroy();
+        echo "<script type='text/javascript'>alert('Your Session has timed out. Please Login Again.'); window.location='index.php';</script>";
+    } else {
+        $_SESSION['activeTime'] = time();
+    }
+}
+
 $errors = "";
 include_once("dbconn.php");
 include_once("table_location.php");
@@ -41,6 +51,7 @@ if (isset($_POST['book'])) {
             'dateofride' =>  $dateofride,
             'distance' =>  $distance,
             'status' =>  $status,
+            'time' => time(),
         );
 
         echo "<script type='text/javascript'>alert('Please Login First.'); window.location='login.php';</script>";

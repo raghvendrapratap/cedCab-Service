@@ -28,12 +28,17 @@ class tableLocation
 
     function addLocations($locationName, $distance, $conn)
     {
-
-        $sql = "INSERT INTO `tbl_location` (`name`, `distance`,`is_available`) VALUES('$locationName','$distance',1)";
-        if ($conn->query($sql) === true) {
-            echo "<script type='text/javascript'>alert('" . $locationName . " location added Succssfully');</script>";
+        $sql1 = "SELECT * from `tbl_location` WHERE name='$locationName'";
+        $result1 = $conn->query($sql1);
+        if ($result1->num_rows > 0) {
+            echo "<script type='text/javascript'>alert('Location Name already exists.');</script>";
         } else {
-            echo "<script type='text/javascript'>alert('Failed, Enter valid details');</script>";
+            $sql = "INSERT INTO `tbl_location` (`name`, `distance`,`is_available`) VALUES('$locationName','$distance',1)";
+            if ($conn->query($sql) === true) {
+                echo "<script type='text/javascript'>alert('" . $locationName . " location added Succssfully');</script>";
+            } else {
+                echo "<script type='text/javascript'>alert('Failed, Enter valid details');</script>";
+            }
         }
     }
 
@@ -74,5 +79,14 @@ class tableLocation
         $result = $conn->query($sql);
 
         return $result->num_rows;
+    }
+    function checklname($lname, $conn)
+    {
+
+        $sql = "SELECT * from `tbl_location` WHERE name='$lname'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            return $result;
+        }
     }
 }
