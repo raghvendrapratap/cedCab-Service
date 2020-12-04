@@ -129,8 +129,9 @@
 #customer div.content,
 #admin div.content {
     margin-left: 200px;
-    padding: 1px 16px;
+    padding: 1px 5px 1px 15px;
     height: 100%;
+    width: 84%;
     margin-bottom: 70px;
 }
 
@@ -660,7 +661,7 @@ th {
 .footer {
     position: fixed;
     bottom: 0;
-    width: 82%;
+    width: 84%;
     background-color: #EFEFEF;
     text-align: center;
     /* padding-bottom: 10px; */
@@ -687,4 +688,8 @@ th {
 
 #admin #admincontent {
     height: 1000px;
+}
+
+i {
+    padding-left: 5px;
 }
