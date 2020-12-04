@@ -243,19 +243,6 @@ if (isset($_GET['status'])) {
         })
         </script>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 
 </html>
