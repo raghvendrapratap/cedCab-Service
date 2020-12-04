@@ -133,12 +133,12 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
                         <div>
                             <div><label>Location Name</label></div>
                             <input type="text" id="username" name="locationName" required
-                                pattern="^[a-zA-Z_]+( [a-zA-Z_]+)*$"
-                                title="Name should contain letters and one space between words.">
+                                pattern="^[a-zA-Z0-9_][a-zA-Z]+[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$"
+                                title="Name should contain letters and letters and one space between words.">
                         </div>
                         <div>
                             <div><label>Distance From Charbagh</label></div>
-                            <input type="text" class="onlytext" id="name" name="distance">
+                            <input type="text" class="onlytext" id="name" name="distance" required>
                         </div>
                         <div>
                             <input type="submit" id="addnewlocation" value="Add New Location" name="addnew" required>

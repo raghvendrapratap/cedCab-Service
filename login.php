@@ -7,6 +7,12 @@ $message = "";
 include_once("dbconn.php");
 include_once("users.php");
 
+if (isset($_SESSION['cabInfo'])) {
+    if (time() - $_SESSION['cabInfo']['time'] > 120) {
+        unset($_SESSION['cabInfo']);
+    }
+}
+
 if (isset($_POST['login'])) {
 
     $username = isset($_POST['username']) ? $_POST['username'] : '';

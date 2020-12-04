@@ -25,7 +25,7 @@ if (isset($_POST['book'])) {
     if (isset($_SESSION['userInfo'])) {
 
         if ($_SESSION['userInfo']['is_admin'] == 1) {
-            echo "<script type='text/javascript'>alert('You are Admin. You cant book Cab.');</script>";
+            echo "<script type='text/javascript'>alert('You are Admin. You cant book Cab.');window.location='admindashboard.php';</script>";
         } elseif ($_SESSION['userInfo']['is_admin'] == 0) {
 
             $sql = $tableRide->bookRide($pickup, $drop, $cabType, $luggage, $fare, $dateofride, $distance, $status, $customerid, $dbconn->conn);

@@ -42,7 +42,6 @@ $(function() {
     });
 });
 
-
 $(function() {
 
     $("#submit").click(function(x) {
