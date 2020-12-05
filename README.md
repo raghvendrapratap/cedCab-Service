@@ -1,4 +1,4 @@
-# cedCab-Service
+# Ced Cab-Service
 A Cab Service Porject.
 - Anyone can calculate fare.
 
