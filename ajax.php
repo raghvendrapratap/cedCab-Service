@@ -421,4 +421,14 @@ if (isset($_POST['action'])) {
       echo "inValid";
     }
   }
+  if ($_POST['action'] == "checkupdatelocation") {
+
+    $locationid = isset($_POST['locationid']) ? $_POST['locationid'] : '';
+    $updatename = isset($_POST['updatename']) ? $_POST['updatename'] : '';
+    $lInfo = $tablelocation->checklupdatename($locationid, $updatename, $dbconn->conn);
+
+    if (isset($lInfo)) {
+      echo "inValid";
+    }
+  }
 }

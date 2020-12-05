@@ -45,7 +45,6 @@ if (isset($_GET['action'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/4b2ee26aaa.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     <link rel="stylesheet" href="style.css">
     <title>Ced Cab</title>
 </head>
@@ -165,28 +164,29 @@ if (isset($_GET['action'])) {
                         <?php
                             } ?>
                     </div>
+                    <div class="footer">
+
+                        <div id="firstFooter" class="fleft">
+                            <p class="logopara">Ced<span class="logospan border-radius">Cab</span>
+                        </div>
+                        <div id="midFooter" class="fleft">
+                            <p>
+                                <span>&#169;</span>Copyright 2020
+                            </p>
+                        </div>
+
+                        <div id="rightFooter" class="fleft">
+                            <i class="fa fa-facebook-square icon-size mx-2 " aria-hidden="true"></i>
+                            <i class="fa fa-twitter icon-size mx-2" aria-hidden="true"></i>
+                            <i class="fa fa-instagram icon-size mx-2" aria-hidden="true"></i>
+                        </div>
+
+
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="footer">
 
-                <div id="firstFooter" class="fleft">
-                    <p class="logopara">Ced<span class="logospan border-radius">Cab</span>
-                </div>
-                <div id="midFooter" class="fleft">
-                    <p>
-                        <span>&#169;</span>Copyright 2020
-                    </p>
-                </div>
-
-                <div id="rightFooter" class="fleft">
-                    <i class="fa fa-facebook-square icon-size mx-2 " aria-hidden="true"></i>
-                    <i class="fa fa-twitter icon-size mx-2" aria-hidden="true"></i>
-                    <i class="fa fa-instagram icon-size mx-2" aria-hidden="true"></i>
-                </div>
-
-
-                </p>
-            </div>
             <script>
             $(function() {
                 $("button").click(function() {
@@ -203,6 +203,7 @@ if (isset($_GET['action'])) {
                 })
             })
             </script>
+
         </div>
 </body>
 
