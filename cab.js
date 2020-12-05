@@ -6,6 +6,7 @@ $(function() {
     $("#luggageMsg").hide();
 
     $("#type").change(function() {
+        $("#typeMsg").hide();
         $("#book").hide();
         $("#submit").show();
         var cabType = $("#type").val();
@@ -17,6 +18,13 @@ $(function() {
             $("#luggageMsg").hide();
             $("input").removeAttr('disabled');
         }
+    });
+
+    $("#pickup").change(function() {
+        $("#pickupMsg1").hide();
+    });
+    $("#drop").change(function() {
+        $("#dropMsg1").hide();
     });
 
     $(".onlytext").bind("keypress", function(e) {
