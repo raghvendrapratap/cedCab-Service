@@ -89,4 +89,41 @@ class tableLocation
             return $result;
         }
     }
+    function checklupdatename($locationid, $updatename, $conn)
+    {
+        $sql = "SELECT * from `tbl_location` WHERE name='$updatename'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            if ($row['id'] != $locationid) {
+                return "Invalid";
+            }
+        }
+    }
+
+    function updateLocations($locationid, $locationname, $locationdistance, $conn)
+    {
+        $sql = "SELECT * from `tbl_location` WHERE `name`='$locationname'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            if ($row['id'] == $locationid) {
+                $sql = "UPDATE  `tbl_location` SET `name`='$locationname',`distance`='$locationdistance' WHERE `id`=$locationid";
+                if ($conn->query($sql) === true) {
+                    echo "<script type='text/javascript'>alert('Location updated Succssfully');</script>";
+                } else {
+                    echo "<script type='text/javascript'>alert('Updation Failed');</script>";
+                }
+            } else {
+                echo "<script type='text/javascript'>alert('Location Name already exists');</script>";
+            }
+        } else {
+            $sql = "UPDATE  `tbl_location` SET `name`='$locationname',`distance`='$locationdistance' WHERE `id`=$locationid";
+            if ($conn->query($sql) === true) {
+                echo "<script type='text/javascript'>alert('Location updated Succssfully');</script>";
+            } else {
+                echo "<script type='text/javascript'>alert('Updation Failed');</script>";
+            }
+        }
+    }
 }

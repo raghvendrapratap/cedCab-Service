@@ -27,6 +27,14 @@ $tablelocation = new tablelocation();
 
 $name = isset($_SESSION['userInfo']['name']) ? $_SESSION['userInfo']['name'] : '';
 
+if (isset($_POST['update'])) {
+    $locationid = isset($_POST['locationid']) ? $_POST['locationid'] : '';
+    $locationname = isset($_POST['locationname']) ? $_POST['locationname'] : '';
+    $locationdistance = isset($_POST['locationdistance']) ? $_POST['locationdistance'] : 0;
+
+    $update = $tablelocation->updateLocations($locationid, $locationname, $locationdistance, $dbconn->conn);
+}
+
 if (isset($_GET['action'])) {
 
     if ($_GET['action'] == 'enable') {
@@ -96,6 +104,7 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
                 <table id="ride">
                     <thead>
                         <tr>
+                            <th>Location Id</th>
                             <th>Location Name</th>
                             <th>Distance from Charbagh</th>
                             <th>Availability</th>
@@ -110,7 +119,13 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
                                 $totallocation += 1;
                         ?>
                         <tr>
-                            <td><?php echo $row['name'] ?></td>
+                            <td><?php echo $row['id'] ?></td>
+                            <td><?php echo $row['name'] ?>
+                                <input type="hidden" id="lctnname<?php echo $row['id'] ?>"
+                                    value="<?php echo $row['name'] ?>">
+                                <input type="hidden" id="lctndist<?php echo $row['id'] ?>"
+                                    value="<?php echo $row['distance'] ?>">
+                            </td>
                             <td><?php echo $row['distance'] ?> Km</td>
                             <td><?php if ($row['is_available'] == 0) {
                                             echo "Not Available";
@@ -118,17 +133,19 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
                                             echo "Available";
                                         } ?>
                             </td>
-                            <td id="action"><?php if ($row['is_available'] == 0) : ?><a
-                                    href="adminlocations.php?action=enable&locationid=<?php echo $row['id']; ?>"
+                            <td id="action"><a class="editbtn"
+                                    id="edit">Edit</a><?php if ($row['is_available'] == 0) : ?>
+                                <a href="adminlocations.php?action=enable&locationid=<?php echo $row['id']; ?>"
                                     id="aproove">Enable</a><?php endif; ?><?php if ($row['is_available'] == 1) : ?><a
                                     href="adminlocations.php?action=disable&locationid=<?php echo $row['id']; ?>"
                                     id="cancel">Disable</a><?php endif; ?><a
                                     href="adminlocations.php?action=delete&locationid=<?php echo $row['id']; ?>"
-                                    id="delete">Delete</a></td>
+                                    id="delete">Delete</a>
+                            </td>
                         </tr>
                         <?php  } ?>
                         <tr>
-                            <td colspan="4">Total locations : <?php echo $totallocation; ?></td>
+                            <td colspan="5">Total locations : <?php echo $totallocation; ?></td>
                         </tr>
                         <?php } ?>
                     <tbody>
@@ -148,11 +165,36 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
                                 title="Name should contain letters and letters and one space between words.">
                         </div>
                         <div>
-                            <div><label>Distance From Charbagh</label></div>
+                            <div><label>Distance From Charbagh in Km</label></div>
                             <input type="text" class="onlytext" id="name" name="distance" required>
                         </div>
                         <div>
                             <input type="submit" id="addnewlocation" value="Add New Location" name="addnew" required>
+                        </div>
+                    </form>
+                </div>
+                <div id="update">
+                    <form action="adminlocations.php" method="POST">
+                        <div>
+                            <h2>Update location</h2>
+                        </div>
+                        <div>
+                            <div><label>Location Id</label></div>
+                            <input type="text" readonly id="locationid" name="locationid">
+                        </div>
+                        <div>
+                            <div><label>Location Name</label></div><small id="umsg">*Location already exists.</small>
+                            <input type="text" id="updatename" name="locationname" required
+                                pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$"
+                                title="Name should contain letters and letters and one space between words.">
+
+                        </div>
+                        <div>
+                            <div><label>Distance From Charbagh in Km</label></div>
+                            <input type="text" class="onlytext" id="updatedistance" name="locationdistance" required>
+                        </div>
+                        <div>
+                            <input type="submit" id="addnewlocation" value="Update Location" name="update">
                         </div>
                     </form>
                 </div>
@@ -181,11 +223,14 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
 
         <script>
         $(function() {
+            $("#update").hide();
             $("#invalid").hide();
+            $("#umsg").hide();
             $("#notification").hide();
             $("#match").hide();
             $("#addnew").hide();
             $("#aUpdate").click(function() {
+                $("#update").hide();
                 $("#invalid").hide();
                 $("#aUpdate").addClass("active");
                 $("#aPass").removeClass("active");
@@ -194,7 +239,41 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
                 $("#ridetable").show();
             })
 
+            $("#ride").on('click', '.editbtn', function() {
+                var currentRow = $(this).closest("tr");
+                var col1 = currentRow.find("td:eq(0)").text();
+
+                var name = document.getElementById("lctnname" + col1).value;
+                var dist = document.getElementById("lctndist" + col1).value;
+                $("#updatename").val(name);
+                $("#updatedistance").val(dist);
+                $("#locationid").val(col1);
+                $("#umsg").hide();
+
+
+                $("#aUpdate").removeClass("active");
+                $("#aPass").removeClass("active");
+                $("#notification").hide();
+                $("#addnew").hide();
+                $("#ridetable").hide();
+
+                $("#update").show();
+            });
+
+
+            // $(".editbtn").click(function() {
+            //     $("#umsg").hide();
+            //     $("#update").show();
+            //     $("#invalid").hide();
+            //     $("#aUpdate").removeClass("active");
+            //     $("#aPass").removeClass("active");
+            //     $("#notification").hide();
+            //     $("#addnew").hide();
+            //     $("#ridetable").hide();
+            // })
+
             $("#aPass").click(function() {
+                $("#update").hide();
                 $("#invalid").hide();
                 $("#aPass").addClass("active");
                 $("#aUpdate").removeClass("active");
@@ -233,6 +312,30 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
                     error: function() {
                         console.log("result");
                         $("#invalid").hide();
+                    }
+                })
+            })
+            $("#updatename").keyup(function() {
+                $("#umsg").hide();
+                var updatename = $("#updatename").val();
+                var locationid = $("#locationid").val();
+                $.ajax({
+                    url: 'ajax.php',
+                    type: 'POST',
+                    data: {
+                        locationid: locationid,
+                        updatename: updatename,
+                        action: 'checkupdatelocation',
+                    },
+                    success: function(result) {
+                        console.log(result);
+                        if (result == "inValid") {
+                            $("#umsg").show();
+                        }
+                    },
+                    error: function() {
+                        console.log("result");
+                        $("#umsg").hide();
                     }
                 })
             })

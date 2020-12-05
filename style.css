@@ -81,7 +81,8 @@
 #signup h2,
 #userInfo h2,
 #change h2,
-#addnew h2 {
+#addnew h2,
+#update h2 {
     text-align: center;
 }
 
@@ -676,7 +677,6 @@ th {
     width: 84%;
     background-color: #EFEFEF;
     text-align: center;
-    /* padding-bottom: 10px; */
 }
 
 .fleft {
