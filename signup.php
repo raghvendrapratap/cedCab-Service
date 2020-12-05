@@ -27,7 +27,6 @@ if (isset($_POST['signup'])) {
     $sql = $user->signup($username, $name, $dateofsignup, $mob, $isblock, $password, $repassword, $is_admin, $dbconn->conn);
     $errors = $sql;
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +69,7 @@ if (isset($_POST['signup'])) {
             </nav>
         </div>
     </header>
-    <section id="signupform">
+    <section id="signupform" class="bg-light-yellow">
         <div>
             <?php if (sizeof($errors) > 0) : ?>
             <ul id="errors">
@@ -88,7 +87,7 @@ if (isset($_POST['signup'])) {
                 <div>
                     <div><label>Username</label></div><small id="invalid">*Username already exists.</small>
                     <input type="text" id="username" name="username" placeholder="Username" pattern="[A-Za-z0-9_]{1,20}"
-                        title="Username should only contain letters numbers and undercsore And length should be 20."
+                        title="Username should only contain letters numbers and undercsore And max-length is 20."
                         required>
 
                 </div>
@@ -101,7 +100,7 @@ if (isset($_POST['signup'])) {
                 <div>
                     <div><label>Mob No.</label></div>
                     <input type="text" id="mob" class="onlytext" name="mob" placeholder="Mob No." maxlength="10"
-                        minlength="10">
+                        minlength="10" title="Mobile should be of 10 digit">
                 </div>
                 <div>
                     <div><label>Password</label></div>
@@ -162,16 +161,20 @@ if (isset($_POST['signup'])) {
     <!-- Footer area -->
     <div class="row text-center container-fluid py-3 m-0 bg-light" id="footer">
 
-        <div class="col-md-4 col-lg-4 col-sm-12 pt-2">
-            <i class="fa fa-facebook-square icon-size mx-2 " aria-hidden="true"></i>
-            <i class="fa fa-twitter icon-size mx-2" aria-hidden="true"></i>
-            <i class="fa fa-instagram icon-size mx-2" aria-hidden="true"></i>
-        </div>
+
 
         <div class="col-md-4 col-lg-4 col-sm-12  pt-2">
             <p class="lead text-warning m-0">Ced<span class="bg-warning border-radius text-white px-1">Cab</span></p>
         </div>
         <div class="col-md-4 col-lg-4 col-sm-12 pt-2">
+            <p>
+                <span>&#169;</span>Copyright 2020
+            </p>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-12 pt-2">
+            <i class="fa fa-facebook-square icon-size mx-2 " aria-hidden="true"></i>
+            <i class="fa fa-twitter icon-size mx-2" aria-hidden="true"></i>
+            <i class="fa fa-instagram icon-size mx-2" aria-hidden="true"></i>
         </div>
     </div>
 

@@ -38,10 +38,11 @@
 #loginform input[type=number] {
     width: 100%;
     padding: 12px 20px;
-    margin: 8px 0;
+    margin: 0 0 15px 0;
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
+    border-radius: 20px;
 }
 
 #signupform #submit,
@@ -56,6 +57,7 @@
     margin: 8px 0;
     border: none;
     cursor: pointer;
+    border-radius: 20px;
     width: 100%;
 }
 
@@ -66,8 +68,13 @@
 
 #loginform,
 #signupform {
-    max-width: 50%;
-    margin: 50px 20%;
+    height: 100%;
+    max-width: 100%;
+    padding: 50px 30% 70px 30%;
+}
+
+.bg-light-yellow {
+    background-color: rgb(229, 240, 167);
 }
 
 #login h2,
@@ -76,6 +83,11 @@
 #change h2,
 #addnew h2 {
     text-align: center;
+}
+
+label {
+    padding-left: 20px;
+    font-weight: 900;
 }
 
 #signupform small,

@@ -1,11 +1,11 @@
 <?php
-
 session_start();
 if (!isset($_SESSION['userInfo'])) {
     header('Location: index.php');
 } elseif ($_SESSION['userInfo']['is_admin'] == 0) {
     header('Location: index.php');
 }
+
 if (isset($_SESSION['activeTime'])) {
     if (time() - $_SESSION['activeTime'] > 300) {
         session_destroy();

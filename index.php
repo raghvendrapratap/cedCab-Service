@@ -252,16 +252,20 @@ if (isset($_POST['book'])) {
     <!-- Footer area -->
     <div class="row text-center container-fluid p-0 m-0 " id="footer">
 
-        <div class="col-md-4 col-lg-4 col-sm-12 pt-2">
-            <i class="fa fa-facebook-square icon-size mx-2 " aria-hidden="true"></i>
-            <i class="fa fa-twitter icon-size mx-2" aria-hidden="true"></i>
-            <i class="fa fa-instagram icon-size mx-2" aria-hidden="true"></i>
-        </div>
+
 
         <div class="col-md-4 col-lg-4 col-sm-12  pt-2">
             <p class="lead text-warning m-0">Ced<span class="bg-warning border-radius text-white px-1">Cab</span></p>
         </div>
         <div class="col-md-4 col-lg-4 col-sm-12 pt-2">
+            <p>
+                <span>&#169;</span>Copyright 2020
+            </p>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-12 pt-2">
+            <i class="fa fa-facebook-square icon-size mx-2 " aria-hidden="true"></i>
+            <i class="fa fa-twitter icon-size mx-2" aria-hidden="true"></i>
+            <i class="fa fa-instagram icon-size mx-2" aria-hidden="true"></i>
         </div>
     </div>
 
