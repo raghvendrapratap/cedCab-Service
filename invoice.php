@@ -74,14 +74,11 @@ if (isset($_GET['action'])) {
                 <div id="customer">
                     <div class="sidebar">
 
-                        <p class="logopara">Ced<span class="logospan border-radius">Cab</span>
-                        </p>
-                        </p>
+                        <p class="logopara"> Ced<span class="logospan border-radius">Cab</span> </p>
                         <a class="<?php if ($file[0] == "customerdashboard.php") : ?> active<?php endif; ?>" href="customerdashboard.php">Home</a>
                         <a class="<?php if ($file[0] == "yourride.php") : ?> active<?php endif; ?>" href="yourride.php">Your
-                            Ride</a>
-                        <a class="<?php if ($file[0] == "yourprofile.php") : ?> active<?php endif; ?>" href="yourprofile.php">Your
-                            Profile</a>
+                            Rides</a>
+                        <a class="<?php if ($file[0] == "yourprofile.php") : ?> active<?php endif; ?>" href="yourprofile.php">Your Profile </a>
                         <a href="index.php">Book Cab</a>
                         <a href="logout.php">Logout</a>
                     </div>

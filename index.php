@@ -68,7 +68,8 @@ if (isset($_POST['book'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <script src="https://kit.fontawesome.com/4b2ee26aaa.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="cab.js"></script>
@@ -82,7 +83,9 @@ if (isset($_POST['book'])) {
             <nav class="navbar navbar-expand-lg navbar-expand-md navbar-light bg-white">
                 <p class="lead text-warning m-0">Ced<span class="bg-warning border-radius text-white px-1">Cab</span>
                 </p>
-                <button class="navbar-toggler px-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler px-2" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon small-text"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -93,33 +96,33 @@ if (isset($_POST['book'])) {
 
                             if ($_SESSION['userInfo']['is_admin'] == 1) { ?>
 
-                                <li class="nav-item active">
-                                    <a class="btn btn-outline-info m-2 my-sm-0" href="admindashboard.php">Admin Dashboard</a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="btn btn-danger text-light" href="logout.php">Logout </a>
-                                </li>
+                        <li class="nav-item active">
+                            <a class="btn btn-outline-info m-2 my-sm-0" href="admindashboard.php">Admin Dashboard</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="btn btn-danger text-light" href="logout.php">Logout </a>
+                        </li>
 
-                            <?php
+                        <?php
                             } elseif ($_SESSION['userInfo']['is_admin'] == 0) { ?>
 
-                                <li class="nav-item active">
-                                    <a class="btn btn-outline-info m-2 my-sm-0" href="customerdashboard.php">Customer
-                                        Dashboard</a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="btn btn-danger text-light" href="logout.php">Logout </a>
-                                </li>
+                        <li class="nav-item active">
+                            <a class="btn btn-outline-info m-2 my-sm-0" href="customerdashboard.php">Customer
+                                Dashboard</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="btn btn-danger text-light" href="logout.php">Logout </a>
+                        </li>
 
-                            <?php }
+                        <?php }
                         } else { ?>
 
-                            <li class="nav-item active">
-                                <a class="btn btn-success text-light" href="login.php">Login </a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="btn btn-info ml-2 text-light" href="signup.php">Sign Up</a>
-                            </li>
+                        <li class="nav-item active">
+                            <a class="btn btn-success text-light" href="login.php">Login </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="btn btn-info ml-2 text-light" href="signup.php">Sign Up</a>
+                        </li>
 
                         <?php  }
                         ?>
@@ -143,7 +146,8 @@ if (isset($_POST['book'])) {
             <div class="col-sm-12 col-md-6 col-lg-5 bg-light-grey px-4 pb-2 border-radius">
                 <form action="" method="POST">
                     <div class="text-center border-bottom border-secondary mb-2">
-                        <p class="lead text-warning my-2">Ced<span class="bg-warning border-radius text-white px-1">Cab</span></p>
+                        <p class="lead text-warning my-2">Ced<span
+                                class="bg-warning border-radius text-white px-1">Cab</span></p>
                     </div>
                     <div class="text-center">
                         <h4 class=""> Your everyday travel partner</h4>
@@ -152,7 +156,8 @@ if (isset($_POST['book'])) {
                     <div class="form-group row bg-grey border-radius my-1">
                         <label for="pickup" class="col-sm-2  small-text my-auto">PICKUP</label>
                         <div class="col-sm-10">
-                            <select class="form-control-plaintext pl-2 form-control dropdown-arrow-none options" name="pickup" id="pickup">
+                            <select class="form-control-plaintext pl-2 form-control dropdown-arrow-none options"
+                                name="pickup" id="pickup">
                                 <option value="" selected>Current location</option>
 
                                 <?php
@@ -160,7 +165,7 @@ if (isset($_POST['book'])) {
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) { ?>
 
-                                        <option value="<?php echo $row['name'] ?>"><?php echo $row['name'] ?></option>
+                                <option value="<?php echo $row['name'] ?>"><?php echo $row['name'] ?></option>
 
                                 <?php  }
                                 } ?>
@@ -174,7 +179,8 @@ if (isset($_POST['book'])) {
                     <div class="form-group row bg-grey border-radius my-1">
                         <label for="drop" class="col-sm-2 col-form-label small-text my-auto">DROP</label>
                         <div class="col-sm-10 ">
-                            <select class="form-control pl-2 form-control-plaintext dropdown-arrow-none options" name="drop" id="drop">
+                            <select class="form-control pl-2 form-control-plaintext dropdown-arrow-none options"
+                                name="drop" id="drop">
                                 <option value="" selected>Enter drop for ride estimate</option>
 
                                 <?php
@@ -182,7 +188,7 @@ if (isset($_POST['book'])) {
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) { ?>
 
-                                        <option value="<?php echo $row['name'] ?>"><?php echo $row['name'] ?></option>
+                                <option value="<?php echo $row['name'] ?>"><?php echo $row['name'] ?></option>
 
                                 <?php  }
                                 } ?>
@@ -196,7 +202,8 @@ if (isset($_POST['book'])) {
                     <div class="form-group row bg-grey border-radius my-1">
                         <label for="type" class="col-sm-2 col-form-label small-text my-auto">CAB TYPE</label>
                         <div class="col-sm-10 ">
-                            <select class="form-control pl-2 form-control-plaintext dropdown-arrow-none" name="cabType" id="type">
+                            <select class="form-control pl-2 form-control-plaintext dropdown-arrow-none" name="cabType"
+                                id="type">
                                 <option value="" selected>Drop down to select CAB Type</option>
                                 <option value="CedMicro">CedMicro</option>
                                 <option value="CedMini">CedMini</option>
@@ -211,7 +218,8 @@ if (isset($_POST['book'])) {
                     <div class="form-group row bg-grey border-radius my-1">
                         <label for="luggage" class="col-sm-2 col-form-label small-text my-auto">Luggage</label>
                         <div class="col-sm-10 bg-grey border-radius">
-                            <input type="text" class="form-control-plaintext pl-2 onlytext" id="luggage" placeholder="Enter Weight in KG">
+                            <input type="text" class="form-control-plaintext pl-2 onlytext" id="luggage"
+                                placeholder="Enter Weight in KG">
                             <small id="luggageMsg" class="form-text text-danger">
                                 *Luggage option is not available with CedMicro.
                             </small>
@@ -227,7 +235,8 @@ if (isset($_POST['book'])) {
                     </div>
                     <div class="form-group row bg-grey">
                         <div class=" col-sm-12 m-0 p-0">
-                            <input type="button" class=" btn-warning btn-lg btn-block" id="submit" name="submit" value="Calculate Fare">
+                            <input type="button" class=" btn-warning btn-lg btn-block" id="submit" name="submit"
+                                value="Calculate Fare">
                         </div>
                     </div>
                     <div class="form-group row bg-grey">
@@ -250,7 +259,7 @@ if (isset($_POST['book'])) {
         </div>
         <div class="col-md-4 col-lg-4 col-sm-12 pt-2">
             <p>
-                <span>&#169;</span>Copyright 2020
+                <span>&#169;</span> Copyright 2020
             </p>
         </div>
         <div class="col-md-4 col-lg-4 col-sm-12 pt-2">
@@ -261,9 +270,11 @@ if (isset($_POST['book'])) {
     </div>
 
     <!-- Libraries -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous">
     </script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
