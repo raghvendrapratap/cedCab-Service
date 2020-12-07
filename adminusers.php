@@ -5,6 +5,18 @@ if (!isset($_SESSION['userInfo'])) {
 } elseif ($_SESSION['userInfo']['is_admin'] == 0) {
     header('Location: index.php');
 }
+
+if (isset($_SESSION['activeTime'])) {
+    if (time() - $_SESSION['activeTime'] > 300) {
+        session_destroy();
+        echo "<script type='text/javascript'>alert('Your Session has timed out. Please Login Again.'); window.location='login.php';</script>";
+    } else {
+        $_SESSION['activeTime'] = time();
+    }
+} else {
+    $_SESSION['activeTime'] = time();
+}
+
 $filename = basename($_SERVER['REQUEST_URI']);
 $file = explode('?', $filename);
 $fileaction = explode('&action', $filename);
@@ -151,14 +163,10 @@ if (isset($_GET['status'])) {
         <div class="sidebar">
             <p class="logopara">Ced<span class="logospan border-radius">Cab</span>
             </p>
-            <a class="<?php if ($file[0] == "admindashboard.php") : ?> active<?php endif; ?>"
-                href="admindashboard.php">Home</a>
-            <a class="<?php if ($file[0] == "adminrides.php") : ?> active<?php endif; ?>"
-                href="adminrides.php?status=all">Rides</a>
-            <a class="<?php if ($file[0] == "adminusers.php") : ?> active<?php endif; ?>"
-                href="adminusers.php">Users</a>
-            <a class="<?php if ($file[0] == "adminlocations.php") : ?> active<?php endif; ?>"
-                href="adminlocations.php">Locations</a>
+            <a class="<?php if ($file[0] == "admindashboard.php") : ?> active<?php endif; ?>" href="admindashboard.php">Home</a>
+            <a class="<?php if ($file[0] == "adminrides.php") : ?> active<?php endif; ?>" href="adminrides.php?status=all">Rides</a>
+            <a class="<?php if ($file[0] == "adminusers.php") : ?> active<?php endif; ?>" href="adminusers.php">Users</a>
+            <a class="<?php if ($file[0] == "adminlocations.php") : ?> active<?php endif; ?>" href="adminlocations.php">Locations</a>
             <a class="<?php if ($file[0] == "adminaccount.php") : ?> active<?php endif; ?>" href="adminaccount.php">Your
                 Account</a>
             <a href="logout.php">Logout</a>
@@ -166,12 +174,9 @@ if (isset($_GET['status'])) {
 
         <div class="content ">
             <div class="topnav">
-                <a class="<?php if ($fileaction[0] == "adminusers.php?status=all") : ?> active<?php endif; ?>"
-                    href="adminusers.php?status=all" id="all">All Users</a>
-                <a class="<?php if ($fileaction[0] == "adminusers.php?status=blocked") : ?> active<?php endif; ?>"
-                    href="adminusers.php?status=blocked" id="blocked">Pending/Blocked Users</a>
-                <a class="<?php if ($fileaction[0] == "adminusers.php?status=unblocked") : ?> active<?php endif; ?>"
-                    href="adminusers.php?status=unblocked" id="unblocked">Unblocked Users</a>
+                <a class="<?php if ($fileaction[0] == "adminusers.php?status=all") : ?> active<?php endif; ?>" href="adminusers.php?status=all" id="all">All Users</a>
+                <a class="<?php if ($fileaction[0] == "adminusers.php?status=blocked") : ?> active<?php endif; ?>" href="adminusers.php?status=blocked" id="blocked">Pending/Blocked Users</a>
+                <a class="<?php if ($fileaction[0] == "adminusers.php?status=unblocked") : ?> active<?php endif; ?>" href="adminusers.php?status=unblocked" id="unblocked">Unblocked Users</a>
                 <a class="" href="adminaccount.php" id="accName">Welcome : <?php echo $name; ?> </a>
             </div>
 
@@ -214,35 +219,28 @@ if (isset($_GET['status'])) {
                         while ($row = $result->fetch_assoc()) {
                             $totaluser += 1;
                     ?>
-                    <tr>
-                        <td><?php echo $row['user_name'] ?></td>
-                        <td><?php echo $row['name'] ?></td>
-                        <td><?php echo $row['dateofsignup'] ?></td>
-                        <td><?php echo $row['mobile'] ?></td>
-                        <td><?php if ($row['isblock'] == 0) {
+                            <tr>
+                                <td><?php echo $row['user_name'] ?></td>
+                                <td><?php echo $row['name'] ?></td>
+                                <td><?php echo $row['dateofsignup'] ?></td>
+                                <td><?php echo $row['mobile'] ?></td>
+                                <td><?php if ($row['isblock'] == 0) {
                                         echo "Blocked";
                                     } elseif ($row['isblock'] == 1) {
                                         echo "Unblocked";
                                     } ?>
-                        </td>
-                        <td id="action"><a href="viewride.php?action=view&userid=<?php echo $row['user_id']; ?>"
-                                id="view">View All Rides</a><?php if ($row['isblock'] == 0) : ?><a
-                                href="<?php echo $fileaction[0]; ?>&action=unblock&userid=<?php echo $row['user_id']; ?>"
-                                id="aproove">Unblock</a><?php endif; ?><?php if ($row['isblock'] == 1) : ?><a
-                                href="<?php echo $fileaction[0]; ?>&action=block&userid=<?php echo $row['user_id']; ?>"
-                                id="cancel">Block</a><?php endif; ?><a
-                                href="<?php echo $fileaction[0]; ?>&action=delete&userid=<?php echo $row['user_id']; ?>"
-                                id="delete">Delete</a></td>
-                    </tr>
-                    <?php  } ?>
-                    <tr>
-                        <td colspan="6">No. of users : <?php echo $totaluser; ?></td>
-                    </tr>
+                                </td>
+                                <td id="action"><a href="viewride.php?action=view&userid=<?php echo $row['user_id']; ?>" id="view">View All Rides</a><?php if ($row['isblock'] == 0) : ?><a href="<?php echo $fileaction[0]; ?>&action=unblock&userid=<?php echo $row['user_id']; ?>" id="aproove">Unblock</a><?php endif; ?><?php if ($row['isblock'] == 1) : ?><a href="<?php echo $fileaction[0]; ?>&action=block&userid=<?php echo $row['user_id']; ?>" id="cancel">Block</a><?php endif; ?><a href="<?php echo $fileaction[0]; ?>&action=delete&userid=<?php echo $row['user_id']; ?>" id="delete">Delete</a></td>
+                            </tr>
+                        <?php  } ?>
+                        <tr>
+                            <td colspan="6">No. of users : <?php echo $totaluser; ?></td>
+                        </tr>
                     <?php } else {
                     ?>
-                    <tr>
-                        <td colspan="6">No Data</td>
-                    </tr>
+                        <tr>
+                            <td colspan="6">No Data</td>
+                        </tr>
                     <?php
                     } ?>
                 <tbody>
@@ -271,21 +269,21 @@ if (isset($_GET['status'])) {
 
     </div>
     <script>
-    $(function() {
+        $(function() {
 
-        var file = '<?php echo $fileaction[0]; ?>';
-        $("#sortby").change(function() {
-            var sortby = $("#sortby").val();
-            var url = file + "&action=sort&sortby=" + sortby;
-            window.location = url;
-        });
+            var file = '<?php echo $fileaction[0]; ?>';
+            $("#sortby").change(function() {
+                var sortby = $("#sortby").val();
+                var url = file + "&action=sort&sortby=" + sortby;
+                window.location = url;
+            });
 
-        $("#filterbydate").change(function() {
-            var filterbydate = $("#filterbydate").val();
-            var url = file + "&action=sort&filterbydate=" + filterbydate;
-            window.location = url;
-        });
-    })
+            $("#filterbydate").change(function() {
+                var filterbydate = $("#filterbydate").val();
+                var url = file + "&action=sort&filterbydate=" + filterbydate;
+                window.location = url;
+            });
+        })
     </script>
     </div>
 </body>

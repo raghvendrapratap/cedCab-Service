@@ -3,10 +3,8 @@ include_once("dbconn.php");
 
 class tableRide
 {
-
     function bookRide($pickup, $drop, $cabType, $luggage, $fare, $dateofride, $distance, $status, $customerid, $conn)
     {
-
         $sql = "INSERT INTO `tbl_ride` (`ride_date`, `from_distance`,`to_distance`, `total_distance`,`luggage`,`total_fare`, `status`,`customer_user_id`,`cabType`) VALUES('$dateofride','$pickup','$drop',$distance,$luggage,$fare,$status,$customerid,'$cabType')";
 
         if ($conn->query($sql) === true) {
@@ -18,7 +16,6 @@ class tableRide
 
     function allRide($customerid, $conn)
     {
-
         $sql = "SELECT * from `tbl_ride` WHERE `customer_user_id`=$customerid";
         $result = $conn->query($sql);
 
@@ -29,7 +26,6 @@ class tableRide
 
     function pendingRide($customerid, $conn)
     {
-
         $sql = "SELECT * from `tbl_ride` WHERE `customer_user_id`=$customerid AND `status`=1";
         $result = $conn->query($sql);
 
@@ -40,7 +36,6 @@ class tableRide
 
     function sortRide($status, $sortBy, $sort, $customerid, $conn)
     {
-
         $sql = "SELECT * from `tbl_ride` WHERE `customer_user_id`=$customerid AND `status`=$status ORDER BY `$sortBy` $sort";
         $result = $conn->query($sql);
 
@@ -48,9 +43,9 @@ class tableRide
             return $result;
         }
     }
+
     function sortAdminRide($status, $sortBy, $sort, $conn)
     {
-
         $sql = "SELECT * from `tbl_ride` WHERE `status`=$status ORDER BY `$sortBy` $sort";
         $result = $conn->query($sql);
 
@@ -61,7 +56,6 @@ class tableRide
 
     function sortAllRide($sortBy, $sort, $customerid, $conn)
     {
-
         $sql = "SELECT * from `tbl_ride` WHERE `customer_user_id`=$customerid ORDER BY `$sortBy` $sort";
         $result = $conn->query($sql);
 
@@ -69,9 +63,9 @@ class tableRide
             return $result;
         }
     }
+
     function sortAllAdminRide($sortBy, $sort, $conn)
     {
-
         $sql = "SELECT * from `tbl_ride` ORDER BY `$sortBy` $sort";
         $result = $conn->query($sql);
 
@@ -82,7 +76,6 @@ class tableRide
 
     function cancelledRide($customerid, $conn)
     {
-
         $sql = "SELECT * from `tbl_ride` WHERE `customer_user_id`=$customerid AND `status`=0";
         $result = $conn->query($sql);
 
@@ -90,9 +83,9 @@ class tableRide
             return $result;
         }
     }
+
     function completedRide($customerid, $conn)
     {
-
         $sql = "SELECT * from `tbl_ride` WHERE `customer_user_id`=$customerid AND `status`=2";
         $result = $conn->query($sql);
 
@@ -103,7 +96,6 @@ class tableRide
 
     function allAdminFilterRide($statusid, $conn)
     {
-
         $sql = "SELECT * from `tbl_ride` WHERE `status`=$statusid ";
         $result = $conn->query($sql);
 
@@ -111,9 +103,9 @@ class tableRide
             return $result;
         }
     }
+
     function allAdminRide($conn)
     {
-
         $sql = "SELECT * from `tbl_ride`";
         $result = $conn->query($sql);
 
@@ -121,9 +113,9 @@ class tableRide
             return $result;
         }
     }
+
     function updateStatus($rideid, $statusid, $conn)
     {
-
         $sql = "UPDATE tbl_ride SET `status`=$statusid WHERE `ride_id`=$rideid";
         if ($conn->query($sql) === true) {
             return "Successfully Updated";
@@ -131,9 +123,9 @@ class tableRide
             return "Updation Failed";
         }
     }
+
     function deleteRide($rideid, $conn)
     {
-
         $sql = "DELETE from tbl_ride WHERE `ride_id`=$rideid";
         if ($conn->query($sql) === true) {
             return "Successfully Deleted";
@@ -144,11 +136,11 @@ class tableRide
 
     function countFilterAllRide($status, $conn)
     {
-
         $sql = " SELECT * from `tbl_ride` WHERE `status`=$status ";
         $result = $conn->query($sql);
         return $row = $result->num_rows;
     }
+
     function countAllRide($conn)
     {
         $sql = " SELECT * from `tbl_ride`";
@@ -166,6 +158,7 @@ class tableRide
             return $result;
         }
     }
+
     function filterbydateRideAll($interval, $conn)
     {
         $sql = "SELECT * from `tbl_ride` WHERE ride_date > DATE_SUB(NOW(), INTERVAL $interval DAY)";
@@ -175,6 +168,7 @@ class tableRide
             return $result;
         }
     }
+
     function filterbydateuserRide($customerid, $status, $interval, $conn)
     {
         $sql = "SELECT * from `tbl_ride` WHERE ride_date > DATE_SUB(NOW(), INTERVAL $interval DAY) AND status=$status AND `customer_user_id`=$customerid";
@@ -184,6 +178,7 @@ class tableRide
             return $result;
         }
     }
+
     function filterbydateUserRideAll($customerid, $interval, $conn)
     {
         $sql = "SELECT * from `tbl_ride` WHERE ride_date > DATE_SUB(NOW(), INTERVAL $interval DAY) AND `customer_user_id`=$customerid";
@@ -196,7 +191,6 @@ class tableRide
 
     function countFilterUserAllRide($customerid, $status, $conn)
     {
-
         $sql = " SELECT * from `tbl_ride` WHERE `status`=$status AND `customer_user_id`=$customerid";
         $result = $conn->query($sql);
         return $row = $result->num_rows;
@@ -212,6 +206,7 @@ class tableRide
             return $row;
         }
     }
+
     function allRideThisMonth($customerid, $conn)
     {
         $sql = "SELECT * FROM tbl_ride WHERE MONTH(ride_date) = MONTH(CURRENT_DATE()) AND YEAR(ride_date) = YEAR(CURRENT_DATE()) AND `customer_user_id`=$customerid";
@@ -221,6 +216,7 @@ class tableRide
             return $result;
         }
     }
+
     function userlastRide($customerid, $conn)
     {
         $sql = "SELECT * FROM `tbl_ride` WHERE customer_user_id=$customerid and ride_date=( SELECT max(cast(ride_date as DateTime)) FROM `tbl_ride` WHERE customer_user_id=$customerid )";

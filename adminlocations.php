@@ -8,7 +8,7 @@ if (!isset($_SESSION['userInfo'])) {
 if (isset($_SESSION['activeTime'])) {
     if (time() - $_SESSION['activeTime'] > 300) {
         session_destroy();
-        echo "<script type='text/javascript'>alert('Your Session has timed out. Please Login Again.'); window.location='index.php';</script>";
+        echo "<script type='text/javascript'>alert('Your Session has timed out. Please Login Again.'); window.location='login.php';</script>";
     } else {
         $_SESSION['activeTime'] = time();
     }
@@ -80,14 +80,10 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
         <div class="sidebar">
             <p class="logopara">Ced<span class="logospan border-radius">Cab</span>
             </p>
-            <a class="<?php if ($file[0] == "admindashboard.php") : ?> active<?php endif; ?>"
-                href="admindashboard.php">Home</a>
-            <a class="<?php if ($file[0] == "adminrides.php") : ?> active<?php endif; ?>"
-                href="adminrides.php?status=all">Rides</a>
-            <a class="<?php if ($file[0] == "adminusers.php") : ?> active<?php endif; ?>"
-                href="adminusers.php">Users</a>
-            <a class="<?php if ($file[0] == "adminlocations.php") : ?> active<?php endif; ?>"
-                href="adminlocations.php">Locations</a>
+            <a class="<?php if ($file[0] == "admindashboard.php") : ?> active<?php endif; ?>" href="admindashboard.php">Home</a>
+            <a class="<?php if ($file[0] == "adminrides.php") : ?> active<?php endif; ?>" href="adminrides.php?status=all">Rides</a>
+            <a class="<?php if ($file[0] == "adminusers.php") : ?> active<?php endif; ?>" href="adminusers.php">Users</a>
+            <a class="<?php if ($file[0] == "adminlocations.php") : ?> active<?php endif; ?>" href="adminlocations.php">Locations</a>
             <a class="<?php if ($file[0] == "adminaccount.php") : ?> active<?php endif; ?>" href="adminaccount.php">Your
                 Account</a>
             <a href="logout.php">Logout</a>
@@ -118,35 +114,27 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
                             while ($row = $result->fetch_assoc()) {
                                 $totallocation += 1;
                         ?>
-                        <tr>
-                            <td><?php echo $row['id'] ?></td>
-                            <td><?php echo $row['name'] ?>
-                                <input type="hidden" id="lctnname<?php echo $row['id'] ?>"
-                                    value="<?php echo $row['name'] ?>">
-                                <input type="hidden" id="lctndist<?php echo $row['id'] ?>"
-                                    value="<?php echo $row['distance'] ?>">
-                            </td>
-                            <td><?php echo $row['distance'] ?> Km</td>
-                            <td><?php if ($row['is_available'] == 0) {
+                                <tr>
+                                    <td><?php echo $row['id'] ?></td>
+                                    <td><?php echo $row['name'] ?>
+                                        <input type="hidden" id="lctnname<?php echo $row['id'] ?>" value="<?php echo $row['name'] ?>">
+                                        <input type="hidden" id="lctndist<?php echo $row['id'] ?>" value="<?php echo $row['distance'] ?>">
+                                    </td>
+                                    <td><?php echo $row['distance'] ?> Km</td>
+                                    <td><?php if ($row['is_available'] == 0) {
                                             echo "Not Available";
                                         } elseif ($row['is_available'] == 1) {
                                             echo "Available";
                                         } ?>
-                            </td>
-                            <td id="action"><a class="editbtn"
-                                    id="edit">Edit</a><?php if ($row['is_available'] == 0) : ?>
-                                <a href="adminlocations.php?action=enable&locationid=<?php echo $row['id']; ?>"
-                                    id="aproove">Enable</a><?php endif; ?><?php if ($row['is_available'] == 1) : ?><a
-                                    href="adminlocations.php?action=disable&locationid=<?php echo $row['id']; ?>"
-                                    id="cancel">Disable</a><?php endif; ?><a
-                                    href="adminlocations.php?action=delete&locationid=<?php echo $row['id']; ?>"
-                                    id="delete">Delete</a>
-                            </td>
-                        </tr>
-                        <?php  } ?>
-                        <tr>
-                            <td colspan="5">Total locations : <?php echo $totallocation; ?></td>
-                        </tr>
+                                    </td>
+                                    <td id="action"><a class="editbtn" id="edit">Edit</a><?php if ($row['is_available'] == 0) : ?>
+                                            <a href="adminlocations.php?action=enable&locationid=<?php echo $row['id']; ?>" id="aproove">Enable</a><?php endif; ?><?php if ($row['is_available'] == 1) : ?><a href="adminlocations.php?action=disable&locationid=<?php echo $row['id']; ?>" id="cancel">Disable</a><?php endif; ?><a href="adminlocations.php?action=delete&locationid=<?php echo $row['id']; ?>" id="delete">Delete</a>
+                                    </td>
+                                </tr>
+                            <?php  } ?>
+                            <tr>
+                                <td colspan="5">Total locations : <?php echo $totallocation; ?></td>
+                            </tr>
                         <?php } ?>
                     <tbody>
                 </table>
@@ -160,9 +148,7 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
                         </div>
                         <div>
                             <div><label>Location Name</label></div><small id="invalid">*Location already exists.</small>
-                            <input type="text" id="lname" name="locationName" required
-                                pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$"
-                                title="Name should contain letters and letters and one space between words.">
+                            <input type="text" id="lname" name="locationName" required pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" title="Name should contain letters and letters and one space between words.">
                         </div>
                         <div>
                             <div><label>Distance From Charbagh in Km</label></div>
@@ -184,9 +170,7 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
                         </div>
                         <div>
                             <div><label>Location Name</label></div><small id="umsg">*Location already exists.</small>
-                            <input type="text" id="updatename" name="locationname" required
-                                pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$"
-                                title="Name should contain letters and letters and one space between words.">
+                            <input type="text" id="updatename" name="locationname" required pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" title="Name should contain letters and letters and one space between words.">
 
                         </div>
                         <div>
@@ -222,124 +206,124 @@ $result = $tablelocation->allLocationsAdmin($dbconn->conn);
         </div>
 
         <script>
-        $(function() {
-            $("#update").hide();
-            $("#invalid").hide();
-            $("#umsg").hide();
-            $("#notification").hide();
-            $("#match").hide();
-            $("#addnew").hide();
-            $("#aUpdate").click(function() {
+            $(function() {
                 $("#update").hide();
                 $("#invalid").hide();
-                $("#aUpdate").addClass("active");
-                $("#aPass").removeClass("active");
-                $("#notification").hide();
-                $("#addnew").hide();
-                $("#ridetable").show();
-            })
-
-            $("#ride").on('click', '.editbtn', function() {
-                var currentRow = $(this).closest("tr");
-                var col1 = currentRow.find("td:eq(0)").text();
-
-                var name = document.getElementById("lctnname" + col1).value;
-                var dist = document.getElementById("lctndist" + col1).value;
-                $("#updatename").val(name);
-                $("#updatedistance").val(dist);
-                $("#locationid").val(col1);
                 $("#umsg").hide();
-
-
-                $("#aUpdate").removeClass("active");
-                $("#aPass").removeClass("active");
                 $("#notification").hide();
+                $("#match").hide();
                 $("#addnew").hide();
-                $("#ridetable").hide();
+                $("#aUpdate").click(function() {
+                    $("#update").hide();
+                    $("#invalid").hide();
+                    $("#aUpdate").addClass("active");
+                    $("#aPass").removeClass("active");
+                    $("#notification").hide();
+                    $("#addnew").hide();
+                    $("#ridetable").show();
+                })
 
-                $("#update").show();
-            });
+                $("#ride").on('click', '.editbtn', function() {
+                    var currentRow = $(this).closest("tr");
+                    var col1 = currentRow.find("td:eq(0)").text();
+
+                    var name = document.getElementById("lctnname" + col1).value;
+                    var dist = document.getElementById("lctndist" + col1).value;
+                    $("#updatename").val(name);
+                    $("#updatedistance").val(dist);
+                    $("#locationid").val(col1);
+                    $("#umsg").hide();
 
 
-            // $(".editbtn").click(function() {
-            //     $("#umsg").hide();
-            //     $("#update").show();
-            //     $("#invalid").hide();
-            //     $("#aUpdate").removeClass("active");
-            //     $("#aPass").removeClass("active");
-            //     $("#notification").hide();
-            //     $("#addnew").hide();
-            //     $("#ridetable").hide();
-            // })
+                    $("#aUpdate").removeClass("active");
+                    $("#aPass").removeClass("active");
+                    $("#notification").hide();
+                    $("#addnew").hide();
+                    $("#ridetable").hide();
 
-            $("#aPass").click(function() {
-                $("#update").hide();
-                $("#invalid").hide();
-                $("#aPass").addClass("active");
-                $("#aUpdate").removeClass("active");
-                $("#notification").hide();
-                $("#addnew").show();
-                $("#ridetable").hide();
-            })
+                    $("#update").show();
+                });
 
-            $(".onlytext").bind("keypress", function(e) {
-                var keyCode = e.which ? e.which : e.keyCode
 
-                if (!(keyCode >= 48 && keyCode <= 57)) {
-                    $(".error").css("display", "inline");
-                    return false;
-                } else {
-                    $(".error").css("display", "none");
-                }
-            })
+                // $(".editbtn").click(function() {
+                //     $("#umsg").hide();
+                //     $("#update").show();
+                //     $("#invalid").hide();
+                //     $("#aUpdate").removeClass("active");
+                //     $("#aPass").removeClass("active");
+                //     $("#notification").hide();
+                //     $("#addnew").hide();
+                //     $("#ridetable").hide();
+                // })
 
-            $("#lname").keyup(function() {
-                $("#invalid").hide();
-                var lname = $("#lname").val();
-                $.ajax({
-                    url: 'ajax.php',
-                    type: 'POST',
-                    data: {
-                        lname: lname,
-                        action: 'checklocation',
-                    },
-                    success: function(result) {
-                        console.log(result);
-                        if (result == "inValid") {
-                            $("#invalid").show();
-                        }
-                    },
-                    error: function() {
-                        console.log("result");
-                        $("#invalid").hide();
+                $("#aPass").click(function() {
+                    $("#update").hide();
+                    $("#invalid").hide();
+                    $("#aPass").addClass("active");
+                    $("#aUpdate").removeClass("active");
+                    $("#notification").hide();
+                    $("#addnew").show();
+                    $("#ridetable").hide();
+                })
+
+                $(".onlytext").bind("keypress", function(e) {
+                    var keyCode = e.which ? e.which : e.keyCode
+
+                    if (!(keyCode >= 48 && keyCode <= 57)) {
+                        $(".error").css("display", "inline");
+                        return false;
+                    } else {
+                        $(".error").css("display", "none");
                     }
                 })
-            })
-            $("#updatename").keyup(function() {
-                $("#umsg").hide();
-                var updatename = $("#updatename").val();
-                var locationid = $("#locationid").val();
-                $.ajax({
-                    url: 'ajax.php',
-                    type: 'POST',
-                    data: {
-                        locationid: locationid,
-                        updatename: updatename,
-                        action: 'checkupdatelocation',
-                    },
-                    success: function(result) {
-                        console.log(result);
-                        if (result == "inValid") {
-                            $("#umsg").show();
+
+                $("#lname").keyup(function() {
+                    $("#invalid").hide();
+                    var lname = $("#lname").val();
+                    $.ajax({
+                        url: 'ajax.php',
+                        type: 'POST',
+                        data: {
+                            lname: lname,
+                            action: 'checklocation',
+                        },
+                        success: function(result) {
+                            console.log(result);
+                            if (result == "inValid") {
+                                $("#invalid").show();
+                            }
+                        },
+                        error: function() {
+                            console.log("result");
+                            $("#invalid").hide();
                         }
-                    },
-                    error: function() {
-                        console.log("result");
-                        $("#umsg").hide();
-                    }
+                    })
+                })
+                $("#updatename").keyup(function() {
+                    $("#umsg").hide();
+                    var updatename = $("#updatename").val();
+                    var locationid = $("#locationid").val();
+                    $.ajax({
+                        url: 'ajax.php',
+                        type: 'POST',
+                        data: {
+                            locationid: locationid,
+                            updatename: updatename,
+                            action: 'checkupdatelocation',
+                        },
+                        success: function(result) {
+                            console.log(result);
+                            if (result == "inValid") {
+                                $("#umsg").show();
+                            }
+                        },
+                        error: function() {
+                            console.log("result");
+                            $("#umsg").hide();
+                        }
+                    })
                 })
             })
-        })
         </script>
     </div>
 </body>

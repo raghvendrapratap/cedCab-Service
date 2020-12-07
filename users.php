@@ -3,7 +3,6 @@ include_once("dbconn.php");
 include_once("tableRide.php");
 class user
 {
-
     function login($username, $password, $conn)
     {
         $sql = "SELECT * from `tbl_user` WHERE `user_name`='$username' AND `password`='$password' AND `isblock`=1";
@@ -74,7 +73,6 @@ class user
 
     function updateUser($customerid, $username, $name, $mobile, $conn)
     {
-
         $sql = "UPDATE tbl_user SET `name`='$name', `mobile`='$mobile'  WHERE `user_name`='$username'";
         if ($conn->query($sql) === true) {
             $_SESSION['userInfo']['name'] = $name;
@@ -86,7 +84,6 @@ class user
 
     function getUserInfo($customerid, $conn)
     {
-
         $sql = "SELECT * from tbl_user WHERE `user_id`=$customerid";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
@@ -119,7 +116,6 @@ class user
 
     function allUserFilter($isblock, $conn)
     {
-
         $sql = "SELECT * from tbl_user WHERE `isblock`=$isblock AND `is_admin`=0";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
@@ -129,7 +125,6 @@ class user
 
     function allUser($conn)
     {
-
         $sql = "SELECT * from tbl_user WHERE `is_admin`=0";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
@@ -139,15 +134,14 @@ class user
 
     function updateUserStatus($userid, $isblock, $conn)
     {
-
         $sql = "UPDATE tbl_user SET `isblock`=$isblock WHERE `user_id`=$userid";
         if ($conn->query($sql) === true) {
             return "Updated";
         }
     }
+
     function deleteUser($userid, $conn)
     {
-
         $sql = "DELETE from  tbl_user WHERE `user_id`=$userid";
         if ($conn->query($sql) === true) {
             return "Updated";
@@ -156,14 +150,13 @@ class user
 
     function countallUserFilter($isblock, $conn)
     {
-
         $sql = "SELECT * from tbl_user WHERE `isblock`=$isblock AND `is_admin`=0";
         $result = $conn->query($sql);
         return $result->num_rows;
     }
+
     function countallUser($conn)
     {
-
         $sql = "SELECT * from tbl_user WHERE `is_admin`=0";
         $result = $conn->query($sql);
         return $result->num_rows;
@@ -171,16 +164,15 @@ class user
 
     function allUserFilterSort($sortby, $isblock, $conn)
     {
-
         $sql = "SELECT * from tbl_user WHERE `isblock`=$isblock AND `is_admin`=0 ORDER BY $sortby";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             return $result;
         }
     }
+
     function allUserSort($sortby, $conn)
     {
-
         $sql = "SELECT * from tbl_user WHERE `is_admin`=0 ORDER BY $sortby";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
@@ -190,16 +182,15 @@ class user
 
     function allUserFilterDate($interval, $isblock, $conn)
     {
-
         $sql = "SELECT * from tbl_user WHERE dateofsignup > DATE_SUB(NOW(), INTERVAL $interval DAY) AND `is_admin`=0 AND `isblock`=$isblock";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             return $result;
         }
     }
+
     function UserFilterDate($interval, $conn)
     {
-
         $sql = "SELECT * from tbl_user WHERE dateofsignup > DATE_SUB(NOW(), INTERVAL $interval DAY) AND `is_admin`=0 ";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
@@ -209,7 +200,6 @@ class user
 
     function checkUsername($username, $conn)
     {
-
         $sql = "SELECT * from `tbl_user` WHERE user_name='$username'";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {

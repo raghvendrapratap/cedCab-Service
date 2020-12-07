@@ -3,10 +3,8 @@ include_once("dbconn.php");
 
 class tableLocation
 {
-
     function allLocation($conn)
     {
-
         $sql = "SELECT * from `tbl_location` WHERE `is_available`=1  ORDER BY `distance`";
         $result = $conn->query($sql);
 
@@ -17,7 +15,6 @@ class tableLocation
 
     function allLocationsAdmin($conn)
     {
-
         $sql = "SELECT * from `tbl_location` ORDER BY `distance`";
         $result = $conn->query($sql);
 
@@ -44,7 +41,6 @@ class tableLocation
 
     function updateLocationStatus($id, $isAvailable, $conn)
     {
-
         $sql = "UPDATE  `tbl_location` SET `is_available`=$isAvailable WHERE `id`=$id";
         if ($conn->query($sql) === true) {
             return "Updated";
@@ -55,7 +51,6 @@ class tableLocation
 
     function deleteLocation($id, $conn)
     {
-
         $sql = "DELETE from `tbl_location`  WHERE `id`=$id";
         if ($conn->query($sql) === true) {
             return "Deleted";
@@ -66,7 +61,6 @@ class tableLocation
 
     function countallLocationsAdmin($conn)
     {
-
         $sql = "SELECT * from `tbl_location`";
         $result = $conn->query($sql);
         return $result->num_rows;
@@ -74,21 +68,21 @@ class tableLocation
 
     function countallLocationsFilter($isAvailable, $conn)
     {
-
         $sql = "SELECT * from `tbl_location` WHERE `is_available`=$isAvailable";
         $result = $conn->query($sql);
 
         return $result->num_rows;
     }
+
     function checklname($lname, $conn)
     {
-
         $sql = "SELECT * from `tbl_location` WHERE name='$lname'";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             return $result;
         }
     }
+
     function checklupdatename($locationid, $updatename, $conn)
     {
         $sql = "SELECT * from `tbl_location` WHERE name='$updatename'";

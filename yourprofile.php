@@ -8,7 +8,7 @@ if (!isset($_SESSION['userInfo'])) {
 if (isset($_SESSION['activeTime'])) {
     if (time() - $_SESSION['activeTime'] > 300) {
         session_destroy();
-        echo "<script type='text/javascript'>alert('Your Session has timed out. Please Login Again.'); window.location='index.php';</script>";
+        echo "<script type='text/javascript'>alert('Your Session has timed out. Please Login Again.'); window.location='login.php';</script>";
     } else {
         $_SESSION['activeTime'] = time();
     }
@@ -47,8 +47,7 @@ $mobile = isset($_SESSION['userInfo']['mob']) ? $_SESSION['userInfo']['mob'] : '
         <div class="sidebar">
             <p class="logopara">Ced<span class="logospan border-radius">Cab</span>
             </p>
-            <a class="<?php if ($file[0] == "customerdashboard.php") : ?> active<?php endif; ?>"
-                href="customerdashboard.php">Home</a>
+            <a class="<?php if ($file[0] == "customerdashboard.php") : ?> active<?php endif; ?>" href="customerdashboard.php">Home</a>
             <a class="<?php if ($file[0] == "yourride.php") : ?> active<?php endif; ?>" href="yourride.php">Your
                 Ride</a>
             <a class="<?php if ($file[0] == "yourprofile.php") : ?> active<?php endif; ?>" href="yourprofile.php">Your
@@ -138,115 +137,115 @@ $mobile = isset($_SESSION['userInfo']['mob']) ? $_SESSION['userInfo']['mob'] : '
         </div>
 
         <script>
-        $(function() {
-            $("#notification").hide();
-            $("#match").hide();
-            $("#change").hide();
-            $("#aUpdate").click(function() {
-                $("#aUpdate").addClass("active");
-                $("#aPass").removeClass("active");
+            $(function() {
                 $("#notification").hide();
+                $("#match").hide();
                 $("#change").hide();
-                $("#userInfo").show();
-            })
+                $("#aUpdate").click(function() {
+                    $("#aUpdate").addClass("active");
+                    $("#aPass").removeClass("active");
+                    $("#notification").hide();
+                    $("#change").hide();
+                    $("#userInfo").show();
+                })
 
-            $("#aPass").click(function() {
-                $("#aPass").addClass("active");
-                $("#aUpdate").removeClass("active");
-                $("#notification").hide();
-                $("#change").show();
-                $("#userInfo").hide();
-            })
+                $("#aPass").click(function() {
+                    $("#aPass").addClass("active");
+                    $("#aUpdate").removeClass("active");
+                    $("#notification").hide();
+                    $("#change").show();
+                    $("#userInfo").hide();
+                })
 
-            var customerid = '<?php echo $customerid; ?>';
-            $.ajax({
-                url: 'ajax.php',
-                type: 'POST',
-                data: {
-                    customerid: customerid,
-                    action: 'getUserInfo',
-                },
-                dataType: "json",
-                success: function(result) {
-                    $("#username").val(result["user_name"]);
-                    $("#name").val(result["name"]);
-                    $("#mob").val(result["mobile"]);
-                },
-                error: function() {
-                    console.log("Error");
-                }
-            })
-
-            $("#updateInfo").click(function() {
-                $("#notification").hide();
-                var username = $("#username").val();
-                var name = $("#name").val();
-                var mobile = $("#mob").val();
+                var customerid = '<?php echo $customerid; ?>';
                 $.ajax({
                     url: 'ajax.php',
                     type: 'POST',
                     data: {
                         customerid: customerid,
-                        username: username,
-                        name: name,
-                        mobile: mobile,
-                        action: 'updateUser',
+                        action: 'getUserInfo',
                     },
-                    // dataType:"json",          
+                    dataType: "json",
                     success: function(result) {
-                        $("#notification").html(result);
-                        $("#notification").show();
+                        $("#username").val(result["user_name"]);
+                        $("#name").val(result["name"]);
+                        $("#mob").val(result["mobile"]);
                     },
                     error: function() {
-                        $("#notification").html("Error");
-                        $("#notification").show();
+                        console.log("Error");
                     }
                 })
-            })
 
-            $("#changepass").click(function() {
-
-                var oldpass = $("#oldpass").val();
-                var newpass = $("#newpass").val();
-                var renewpass = $("#renewpass").val();
-
-                if (oldpass != '' && newpass != '' && renewpass != '') {
-
+                $("#updateInfo").click(function() {
                     $("#notification").hide();
-                    if (newpass == renewpass) {
-                        $("#match").hide();
+                    var username = $("#username").val();
+                    var name = $("#name").val();
+                    var mobile = $("#mob").val();
+                    $.ajax({
+                        url: 'ajax.php',
+                        type: 'POST',
+                        data: {
+                            customerid: customerid,
+                            username: username,
+                            name: name,
+                            mobile: mobile,
+                            action: 'updateUser',
+                        },
+                        // dataType:"json",          
+                        success: function(result) {
+                            $("#notification").html(result);
+                            $("#notification").show();
+                        },
+                        error: function() {
+                            $("#notification").html("Error");
+                            $("#notification").show();
+                        }
+                    })
+                })
 
-                        $.ajax({
-                            url: 'ajax.php',
-                            type: 'POST',
-                            data: {
-                                customerid: customerid,
-                                oldpass: oldpass,
-                                newpass: newpass,
-                                action: 'changePass',
-                            },
-                            // dataType:"json",          
-                            success: function(result) {
-                                $("#notification").html(result);
-                                $("#notification").show();
-                            },
-                            error: function() {
-                                $("#notification").html("Error");
-                                $("#notification").show();
-                            }
-                        })
+                $("#changepass").click(function() {
+
+                    var oldpass = $("#oldpass").val();
+                    var newpass = $("#newpass").val();
+                    var renewpass = $("#renewpass").val();
+
+                    if (oldpass != '' && newpass != '' && renewpass != '') {
+
+                        $("#notification").hide();
+                        if (newpass == renewpass) {
+                            $("#match").hide();
+
+                            $.ajax({
+                                url: 'ajax.php',
+                                type: 'POST',
+                                data: {
+                                    customerid: customerid,
+                                    oldpass: oldpass,
+                                    newpass: newpass,
+                                    action: 'changePass',
+                                },
+                                // dataType:"json",          
+                                success: function(result) {
+                                    $("#notification").html(result);
+                                    $("#notification").show();
+                                },
+                                error: function() {
+                                    $("#notification").html("Error");
+                                    $("#notification").show();
+                                }
+                            })
+
+                        } else {
+                            $("#match").show();
+                        }
 
                     } else {
-                        $("#match").show();
+                        $("#notification").html("*Enter valid inputs.");
+                        $("#notification").show();
                     }
 
-                } else {
-                    $("#notification").html("*Enter valid inputs.");
-                    $("#notification").show();
-                }
-
+                })
             })
-        })
         </script>
     </div>
 </body>

@@ -8,7 +8,7 @@ if (!isset($_SESSION['userInfo'])) {
 if (isset($_SESSION['activeTime'])) {
     if (time() - $_SESSION['activeTime'] > 300) {
         session_destroy();
-        echo "<script type='text/javascript'>alert('Your Session has timed out. Please Login Again.'); window.location='index.php';</script>";
+        echo "<script type='text/javascript'>alert('Your Session has timed out. Please Login Again.'); window.location='login.php';</script>";
     } else {
         $_SESSION['activeTime'] = time();
     }
@@ -72,8 +72,7 @@ if (isset($_GET['status'])) {
         <div class="sidebar">
             <p class="logopara">Ced<span class="logospan border-radius">Cab</span>
             </p>
-            <a class="<?php if ($file[0] == "customerdashboard.php") : ?> active<?php endif; ?>"
-                href="customerdashboard.php">Home</a>
+            <a class="<?php if ($file[0] == "customerdashboard.php") : ?> active<?php endif; ?>" href="customerdashboard.php">Home</a>
             <a class="<?php if ($file[0] == "yourride.php") : ?> active<?php endif; ?>" href="yourride.php">Your
                 Ride</a>
             <a class="<?php if ($file[0] == "yourprofile.php") : ?> active<?php endif; ?>" href="yourprofile.php">Your
@@ -84,14 +83,10 @@ if (isset($_GET['status'])) {
 
         <div class="content ">
             <div class="topnav">
-                <a class="<?php if ($fileaction[0] == "yourride.php?status=all") : ?> active<?php endif; ?>"
-                    href="yourride.php" id="all">All Ride</a>
-                <a class="<?php if ($fileaction[0] == "yourride.php?status=pending") : ?> active<?php endif; ?>"
-                    href="yourride.php?status=pending" id="pending">Pending Ride</a>
-                <a class="<?php if ($fileaction[0] == "yourride.php?status=cancelled") : ?> active<?php endif; ?>"
-                    href="yourride.php?status=cancelled" id="cancelled">Cancelled Ride</a>
-                <a class="<?php if ($fileaction[0] == "yourride.php?status=completed") : ?> active<?php endif; ?>"
-                    href="yourride.php?status=completed" id="completed">Completed Ride</a>
+                <a class="<?php if ($fileaction[0] == "yourride.php?status=all") : ?> active<?php endif; ?>" href="yourride.php" id="all">All Ride</a>
+                <a class="<?php if ($fileaction[0] == "yourride.php?status=pending") : ?> active<?php endif; ?>" href="yourride.php?status=pending" id="pending">Pending Ride</a>
+                <a class="<?php if ($fileaction[0] == "yourride.php?status=cancelled") : ?> active<?php endif; ?>" href="yourride.php?status=cancelled" id="cancelled">Cancelled Ride</a>
+                <a class="<?php if ($fileaction[0] == "yourride.php?status=completed") : ?> active<?php endif; ?>" href="yourride.php?status=completed" id="completed">Completed Ride</a>
                 <a class="" href="yourprofile.php" id="accName">Welcome : <?php echo $_SESSION['userInfo']['name']; ?>
                 </a>
             </div>
@@ -134,15 +129,15 @@ if (isset($_GET['status'])) {
                         if ($result != '') {
                             $totalfare = 0;
                             while ($row = $result->fetch_assoc()) { ?>
-                        <tr>
-                            <td><?php echo $row['ride_date'] ?></td>
-                            <td><?php echo $row['from_distance'] ?></td>
-                            <td><?php echo $row['to_distance'] ?></td>
-                            <td><?php echo $row['luggage'] ?> Kg</td>
-                            <td><?php echo $row['total_distance'] ?> km</td>
-                            <td><?php echo $row['cabType'] ?></td>
-                            <td>Rs. <?php echo $row['total_fare'] ?></td>
-                            <td><?php if ($row['status'] == 0) {
+                                <tr>
+                                    <td><?php echo $row['ride_date'] ?></td>
+                                    <td><?php echo $row['from_distance'] ?></td>
+                                    <td><?php echo $row['to_distance'] ?></td>
+                                    <td><?php echo $row['luggage'] ?> Kg</td>
+                                    <td><?php echo $row['total_distance'] ?> km</td>
+                                    <td><?php echo $row['cabType'] ?></td>
+                                    <td>Rs. <?php echo $row['total_fare'] ?></td>
+                                    <td><?php if ($row['status'] == 0) {
                                             echo "Cancelled";
                                         } elseif ($row['status'] == 1) {
                                             echo "Pending";
@@ -150,20 +145,18 @@ if (isset($_GET['status'])) {
                                             $totalfare += $row['total_fare'];
                                             echo "Completed";
                                         } ?>
-                            </td>
-                            <td id="action"><?php if ($row['status'] == 1) : ?>
-                                <a href="<?php echo $fileaction[0]; ?>&action=cancel&rideid=<?php echo $row['ride_id']; ?>"
-                                    id="cancel">Cancel</a>
-                                <?php endif; ?>
-                                <a href="invoice.php?action=view&rideid=<?php echo $row['ride_id']; ?>&userid=<?php echo $customerid; ?>"
-                                    id="view">Invoice</a>
-                            </td>
-                        </tr>
-                        <?php  } ?>
-                        <tr>
-                            <td colspan="6">Total spent on CedCab :</td>
-                            <td colspan="3">Rs. <?php echo $totalfare; ?></td>
-                        </tr>
+                                    </td>
+                                    <td id="action"><?php if ($row['status'] == 1) : ?>
+                                            <a href="<?php echo $fileaction[0]; ?>&action=cancel&rideid=<?php echo $row['ride_id']; ?>" id="cancel">Cancel</a>
+                                        <?php endif; ?>
+                                        <a href="invoice.php?action=view&rideid=<?php echo $row['ride_id']; ?>&userid=<?php echo $customerid; ?>" id="view">Invoice</a>
+                                    </td>
+                                </tr>
+                            <?php  } ?>
+                            <tr>
+                                <td colspan="6">Total spent on CedCab :</td>
+                                <td colspan="3">Rs. <?php echo $totalfare; ?></td>
+                            </tr>
                         <?php } ?>
                     <tbody>
                 </table>
@@ -190,87 +183,87 @@ if (isset($_GET['status'])) {
             </div>
         </div>
         <script>
-        function showTable(msg) {
-            var customerid = '<?php echo $customerid; ?>';
-            var fileaction = '<?php echo $fileaction[0]; ?>';
-            console.log(msg);
-            var table = "";
-            $fare = 0;
-            $.each(msg, function(i, value) {
-                $button = '';
-                if (value.status == 0) {
-                    $status = "Cancelled";
-                } else if (value.status == 1) {
-                    $button = "<a href='" + fileaction + "&action=cancel&rideid=" + value
-                        .ride_id + "' id='cancel'>Cancel</a>";
-                    $status = "Pending";
-                } else if (value.status == 2) {
-                    $status = "Completed";
-                    $fare += parseInt(value['total_fare']);
-                    console.log(typeof value['total_fare']);
-                }
-                table += "<tr><td> " + value.ride_date + "</td><td>" + value.from_distance + "</td><td>" + value
-                    .to_distance + "</td><td>" + value.luggage + " Kg</td><td>" + value.total_distance +
-                    " km</td><td>" + value.cabType + "</td><td>Rs. " + value.total_fare + "</td><td>" +
-                    $status + "</td><td id='action'>" + $button + "<a href='invoice.php?action=view&rideid=" +
-                    value.ride_id +
-                    "&userid=" + customerid + "' id='view'>Invoice</a></td></tr>";
-            });
-            table += "<tr><td colspan='6'>Total spent on CedCab :</td><td colspan='3'>Rs. " + $fare + "</td></tr>"
-            $("#tbody").html(table);
-        }
-        $(function() {
-            var status = '<?php echo $status; ?>';
-            var customerid = '<?php echo $customerid; ?>';
-            $("#sortby").change(function() {
-                var sortby = $("#sortby").val();
+            function showTable(msg) {
+                var customerid = '<?php echo $customerid; ?>';
+                var fileaction = '<?php echo $fileaction[0]; ?>';
+                console.log(msg);
+                var table = "";
+                $fare = 0;
+                $.each(msg, function(i, value) {
+                    $button = '';
+                    if (value.status == 0) {
+                        $status = "Cancelled";
+                    } else if (value.status == 1) {
+                        $button = "<a href='" + fileaction + "&action=cancel&rideid=" + value
+                            .ride_id + "' id='cancel'>Cancel</a>";
+                        $status = "Pending";
+                    } else if (value.status == 2) {
+                        $status = "Completed";
+                        $fare += parseInt(value['total_fare']);
+                        console.log(typeof value['total_fare']);
+                    }
+                    table += "<tr><td> " + value.ride_date + "</td><td>" + value.from_distance + "</td><td>" + value
+                        .to_distance + "</td><td>" + value.luggage + " Kg</td><td>" + value.total_distance +
+                        " km</td><td>" + value.cabType + "</td><td>Rs. " + value.total_fare + "</td><td>" +
+                        $status + "</td><td id='action'>" + $button + "<a href='invoice.php?action=view&rideid=" +
+                        value.ride_id +
+                        "&userid=" + customerid + "' id='view'>Invoice</a></td></tr>";
+                });
+                table += "<tr><td colspan='6'>Total spent on CedCab :</td><td colspan='3'>Rs. " + $fare + "</td></tr>"
+                $("#tbody").html(table);
+            }
+            $(function() {
+                var status = '<?php echo $status; ?>';
+                var customerid = '<?php echo $customerid; ?>';
+                $("#sortby").change(function() {
+                    var sortby = $("#sortby").val();
 
-                $.ajax({
-                    url: 'ajax.php',
-                    type: 'POST',
-                    data: {
-                        sortby: sortby,
-                        status: status,
-                        customerid: customerid,
-                        action: 'sortRide',
-                    },
-                    dataType: "json",
-                    success: function(result) {
-                        console.log(result);
-                        showTable(result);
-                    },
-                    error: function() {
-                        console.log("Error");
-                    }
-                })
-            });
-        })
-        $(function() {
-            var status = '<?php echo $status; ?>';
-            var customerid = '<?php echo $customerid; ?>';
-            $("#filterbydate").change(function() {
-                var filterbydate = $("#filterbydate").val();
-                $.ajax({
-                    url: 'ajax.php',
-                    type: 'POST',
-                    data: {
-                        customerid: customerid,
-                        filterbydate: filterbydate,
-                        status: status,
-                        action: 'filterbydateRide',
-                    },
-                    dataType: "json",
-                    success: function(result) {
-                        console.log(result);
-                        $("#tbody").html("");
-                        showTable(result);
-                    },
-                    error: function() {
-                        console.log("Error");
-                    }
-                })
-            });
-        })
+                    $.ajax({
+                        url: 'ajax.php',
+                        type: 'POST',
+                        data: {
+                            sortby: sortby,
+                            status: status,
+                            customerid: customerid,
+                            action: 'sortRide',
+                        },
+                        dataType: "json",
+                        success: function(result) {
+                            console.log(result);
+                            showTable(result);
+                        },
+                        error: function() {
+                            console.log("Error");
+                        }
+                    })
+                });
+            })
+            $(function() {
+                var status = '<?php echo $status; ?>';
+                var customerid = '<?php echo $customerid; ?>';
+                $("#filterbydate").change(function() {
+                    var filterbydate = $("#filterbydate").val();
+                    $.ajax({
+                        url: 'ajax.php',
+                        type: 'POST',
+                        data: {
+                            customerid: customerid,
+                            filterbydate: filterbydate,
+                            status: status,
+                            action: 'filterbydateRide',
+                        },
+                        dataType: "json",
+                        success: function(result) {
+                            console.log(result);
+                            $("#tbody").html("");
+                            showTable(result);
+                        },
+                        error: function() {
+                            console.log("Error");
+                        }
+                    })
+                });
+            })
         </script>
     </div>
 </body>

@@ -9,7 +9,7 @@ if (!isset($_SESSION['userInfo'])) {
 if (isset($_SESSION['activeTime'])) {
     if (time() - $_SESSION['activeTime'] > 300) {
         session_destroy();
-        echo "<script type='text/javascript'>alert('Your Session has timed out. Please Login Again.'); window.location='index.php';</script>";
+        echo "<script type='text/javascript'>alert('Your Session has timed out. Please Login Again.'); window.location='login.php';</script>";
     } else {
         $_SESSION['activeTime'] = time();
     }
@@ -107,14 +107,10 @@ if (isset($alladminride)) {
         <div class="sidebar">
             <p class="logopara">Ced<span class="logospan border-radius">Cab</span>
             </p>
-            <a class="<?php if ($file[0] == "admindashboard.php") : ?> active<?php endif; ?>"
-                href="admindashboard.php">Home</a>
-            <a class="<?php if ($file[0] == "adminrides.php") : ?> active<?php endif; ?>"
-                href="adminrides.php?status=all">Rides</a>
-            <a class="<?php if ($file[0] == "adminusers.php") : ?> active<?php endif; ?>"
-                href="adminusers.php">Users</a>
-            <a class="<?php if ($file[0] == "adminlocations.php") : ?> active<?php endif; ?>"
-                href="adminlocations.php">Locations</a>
+            <a class="<?php if ($file[0] == "admindashboard.php") : ?> active<?php endif; ?>" href="admindashboard.php">Home</a>
+            <a class="<?php if ($file[0] == "adminrides.php") : ?> active<?php endif; ?>" href="adminrides.php?status=all">Rides</a>
+            <a class="<?php if ($file[0] == "adminusers.php") : ?> active<?php endif; ?>" href="adminusers.php">Users</a>
+            <a class="<?php if ($file[0] == "adminlocations.php") : ?> active<?php endif; ?>" href="adminlocations.php">Locations</a>
             <a class="<?php if ($file[0] == "adminaccount.php") : ?> active<?php endif; ?>" href="adminaccount.php">Your
                 Account</a>
             <a href="logout.php">Logout</a>
@@ -132,34 +128,31 @@ if (isset($alladminride)) {
                             $row = $firstPendingRide->fetch_assoc();
                             $customerid = $row['customer_user_id'];
                             $userInfo = $user->getUserInfo($customerid, $dbconn->conn); ?>
-                        <div class="coldiv ">
-                            <p class="textRide"><?php echo $pendingRide; ?> <br> New <br>Ride </br> Requests</p>
-                        </div>
-                        <div class="coldiv ">
-                            <p class="text1"><?php echo $row['from_distance'];; ?> To <?php echo $row['to_distance']; ?>
-                            </p>
-                            <p class="text2">Date : <?php echo $row['ride_date']; ?></p>
-                            <p class="text2">Customer Name : <?php echo $userInfo['name'] ?></p>
-                            <p class="text">New Ride Request</p>
-                        </div>
-                        <div class="coldiv ">
-                            <p class="pbtn">
-                                <a id="approvebtn" class="abtn"
-                                    href="admindashboard.php?action=aproove&rideid=<?php echo $row['ride_id']; ?>">Approve</a>
-                            </p>
-                            <p class="pbtn"><a id="cancelbtn" class="abtn"
-                                    href="admindashboard.php?action=cancel&rideid=<?php echo $row['ride_id']; ?>">Cancel</a>
-                            </p>
-                            <p class="pbtn">
-                                <a id="deletebtn" class="abtn"
-                                    href="admindashboard.php?action=delete&rideid=<?php echo $row['ride_id']; ?>">Delete</a>
-                            </p>
-                        </div>
+                            <div class="coldiv ">
+                                <p class="textRide"><?php echo $pendingRide; ?> <br> New <br>Ride </br> Requests</p>
+                            </div>
+                            <div class="coldiv ">
+                                <p class="text1"><?php echo $row['from_distance'];; ?> To <?php echo $row['to_distance']; ?>
+                                </p>
+                                <p class="text2">Date : <?php echo $row['ride_date']; ?></p>
+                                <p class="text2">Customer Name : <?php echo $userInfo['name'] ?></p>
+                                <p class="text">New Ride Request</p>
+                            </div>
+                            <div class="coldiv ">
+                                <p class="pbtn">
+                                    <a id="approvebtn" class="abtn" href="admindashboard.php?action=aproove&rideid=<?php echo $row['ride_id']; ?>">Approve</a>
+                                </p>
+                                <p class="pbtn"><a id="cancelbtn" class="abtn" href="admindashboard.php?action=cancel&rideid=<?php echo $row['ride_id']; ?>">Cancel</a>
+                                </p>
+                                <p class="pbtn">
+                                    <a id="deletebtn" class="abtn" href="admindashboard.php?action=delete&rideid=<?php echo $row['ride_id']; ?>">Delete</a>
+                                </p>
+                            </div>
                         <?php
                         } else { ?>
 
-                        <p class="num">0</p>
-                        <p class="text">New Ride Request</p>
+                            <p class="num">0</p>
+                            <p class="text">New Ride Request</p>
 
                         <?php
                         } ?>

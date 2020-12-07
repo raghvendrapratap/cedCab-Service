@@ -8,7 +8,7 @@ if (!isset($_SESSION['userInfo'])) {
 if (isset($_SESSION['activeTime'])) {
     if (time() - $_SESSION['activeTime'] > 300) {
         session_destroy();
-        echo "<script type='text/javascript'>alert('Your Session has timed out. Please Login Again.'); window.location='index.php';</script>";
+        echo "<script type='text/javascript'>alert('Your Session has timed out. Please Login Again.'); window.location='login.php';</script>";
     } else {
         $_SESSION['activeTime'] = time();
     }
@@ -91,8 +91,7 @@ if (isset($lastRide)) {
             <p class="logopara">Ced<span class="logospan border-radius">Cab</span>
             </p>
             </p>
-            <a class="<?php if ($file[0] == "customerdashboard.php") : ?> active<?php endif; ?>"
-                href="customerdashboard.php">Home</a>
+            <a class="<?php if ($file[0] == "customerdashboard.php") : ?> active<?php endif; ?>" href="customerdashboard.php">Home</a>
             <a class="<?php if ($file[0] == "yourride.php") : ?> active<?php endif; ?>" href="yourride.php">Your
                 Ride</a>
             <a class="<?php if ($file[0] == "yourprofile.php") : ?> active<?php endif; ?>" href="yourprofile.php">Your
